@@ -1,0 +1,35 @@
+######### Experiment Setup #########
+
+Date Experiment: 2023-09-09 13:52:43.151084
+Demonstration BPMN model: None
+BPMN model to explain: 6-2
+Round of prompt engineering for this model: 5
+max_tokens: 2000
+n: 1
+temperature: 0.0
+
+######### Query used #########
+
+[{'role': 'system', 'content': 'You are an expert Q&A system with expert knowledge on the business process modeling language BPMN. Assume you have created a BPMN model. Now you want to explain your BPMN model to users without knowledge on BPMN notation. Consider the standard BPMN 2.0.2 specification.'}, {'role': 'user', 'content': '\n            Please create a textual process description for following BPMN model "Procurement" serialised in XML. Do not add any information that is not described in the given \n\t    BPMN model. Your generated textual process description should enable users to map the relationship of the model elements to the corresponding textual elements in your \n\t    generated description.\n\n            BPMN model "Procurement" serialised in XML:\n            <?xml version="1.0" encoding="UTF-8"?>\n<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1x767qx" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">\n  <bpmn:collaboration id="Collaboration_1a32ji5">\n    <bpmn:participant id="Participant_162ui5k" name="Supplier" processRef="Process_17uzqt4" />\n    <bpmn:participant id="Participant_1ug52fc" name="Assembler AG" processRef="Process_0yqlgvw" />\n    <bpmn:messageFlow id="Flow_0xbqisa" sourceRef="Activity_05ur72l" targetRef="Activity_0dv571v" />\n    <bpmn:messageFlow id="Flow_13qagn9" sourceRef="Activity_1tr0g0r" targetRef="Activity_0hw1wev" />\n  </bpmn:collaboration>\n  <bpmn:process id="Process_17uzqt4" isExecutable="true">\n    <bpmn:task id="Activity_0dv571v" name="Process Order">\n      <bpmn:outgoing>Flow_1y50ogp</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:task id="Activity_1tr0g0r" name="Send Invoice">\n      <bpmn:incoming>Flow_1y50ogp</bpmn:incoming>\n    </bpmn:task>\n    <bpmn:sequenceFlow id="Flow_1y50ogp" sourceRef="Activity_0dv571v" targetRef="Activity_1tr0g0r" />\n  </bpmn:process>\n  <bpmn:process id="Process_0yqlgvw" isExecutable="false">\n    <bpmn:startEvent id="Event_0whvdvf" name="1st each month">\n      <bpmn:outgoing>Flow_0gue98o</bpmn:outgoing>\n      <bpmn:timerEventDefinition id="TimerEventDefinition_11ca7lk" />\n    </bpmn:startEvent>\n    <bpmn:task id="Activity_05ur72l" name="Create Order">\n      <bpmn:incoming>Flow_0gue98o</bpmn:incoming>\n      <bpmn:outgoing>Flow_149sld7</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:task id="Activity_0hw1wev" name="Receive Invoice">\n      <bpmn:incoming>Flow_149sld7</bpmn:incoming>\n      <bpmn:outgoing>Flow_1nnkzh5</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:endEvent id="Event_0s53iso">\n      <bpmn:incoming>Flow_1nnkzh5</bpmn:incoming>\n    </bpmn:endEvent>\n    <bpmn:sequenceFlow id="Flow_0gue98o" sourceRef="Event_0whvdvf" targetRef="Activity_05ur72l" />\n    <bpmn:sequenceFlow id="Flow_149sld7" sourceRef="Activity_05ur72l" targetRef="Activity_0hw1wev" />\n    <bpmn:sequenceFlow id="Flow_1nnkzh5" sourceRef="Activity_0hw1wev" targetRef="Event_0s53iso" />\n  </bpmn:process>\n'}]
+
+######### Generated Textual Process Description #########
+
+The "Procurement" process involves two main participants: "Supplier" and "Assembler AG". 
+
+The process for "Assembler AG" begins on the 1st of each month, as indicated by the start event. Following this, the task "Create Order" is executed. Once the order is created, a message is sent to the "Supplier". 
+
+On the "Supplier" side, upon receiving the order, the task "Process Order" is carried out. After the order is processed, the "Supplier" then executes the task "Send Invoice", and a message is sent back to "Assembler AG". 
+
+Back at "Assembler AG", upon receiving the invoice, the task "Receive Invoice" is executed. After the invoice is received, the process ends. 
+
+The flow of tasks and messages between "Supplier" and "Assembler AG" forms the complete "Procurement" process. 
+
+Please note that the "Supplier" process is executable, meaning it can be automated or run by a system, while the "Assembler AG" process is not executable, indicating it may require manual intervention.
+
+######### Token data #########
+
+usage_prompt_tokens: 1094
+usage_completion_tokens: 220
+usage_total_tokens: 1314
+num_sentences: 10
+num_words: 216

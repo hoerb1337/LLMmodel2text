@@ -1,0 +1,35 @@
+######### Experiment Setup #########
+
+Date Experiment: 2023-09-10 12:17:30.802341
+Demonstration BPMN model: None
+BPMN model to explain: 7-1
+Round of prompt engineering for this model: 1
+max_tokens: 2000
+n: 1
+temperature: 0.0
+
+######### Query used #########
+
+[{'role': 'user', 'content': 'Consider the standard BPMN 2.0.2 specification. Please create a textual process description for following BPMN model "Lead Processing" serialised in XML.\n                        \n                        BPMN model "Lead Processing" serialised in XML:\n                        \n            <?xml version="1.0" encoding="UTF-8"?>\n<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0uj306u" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">\n  <bpmn:collaboration id="Collaboration_1e899st">\n    <bpmn:participant id="Participant_0takqti" name="Lead Processing" processRef="Process_1vwhi8t" />\n  </bpmn:collaboration>\n  <bpmn:process id="Process_1vwhi8t" isExecutable="true">\n    <bpmn:laneSet id="LaneSet_1uq3ozd">\n      <bpmn:lane id="Lane_1lnqia5" name="Manager">\n        <bpmn:flowNodeRef>Event_05gv1y0</bpmn:flowNodeRef>\n        <bpmn:flowNodeRef>Activity_1tmazhd</bpmn:flowNodeRef>\n        <bpmn:flowNodeRef>Activity_1cdmv9e</bpmn:flowNodeRef>\n        <bpmn:flowNodeRef>Activity_1te7a2s</bpmn:flowNodeRef>\n        <bpmn:flowNodeRef>Event_15lagi1</bpmn:flowNodeRef>\n      </bpmn:lane>\n      <bpmn:lane id="Lane_07kk0i9" name="Sales Assistant">\n        <bpmn:flowNodeRef>Activity_1ytjmip</bpmn:flowNodeRef>\n        <bpmn:flowNodeRef>Gateway_0dsfw2y</bpmn:flowNodeRef>\n        <bpmn:flowNodeRef>Event_0t2adol</bpmn:flowNodeRef>\n      </bpmn:lane>\n    </bpmn:laneSet>\n    <bpmn:startEvent id="Event_05gv1y0" name="Each Monday morning">\n      <bpmn:outgoing>Flow_0vzznvg</bpmn:outgoing>\n      <bpmn:timerEventDefinition id="TimerEventDefinition_02n3ujm" />\n    </bpmn:startEvent>\n    <bpmn:task id="Activity_1tmazhd" name="Check open leads">\n      <bpmn:incoming>Flow_0vzznvg</bpmn:incoming>\n      <bpmn:outgoing>Flow_0qpp3y2</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:sequenceFlow id="Flow_0vzznvg" sourceRef="Event_05gv1y0" targetRef="Activity_1tmazhd" />\n    <bpmn:task id="Activity_1cdmv9e" name="Select top five leads">\n      <bpmn:incoming>Flow_0qpp3y2</bpmn:incoming>\n      <bpmn:outgoing>Flow_0lc8bzg</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:sequenceFlow id="Flow_0qpp3y2" sourceRef="Activity_1tmazhd" targetRef="Activity_1cdmv9e" />\n    <bpmn:sequenceFlow id="Flow_0lc8bzg" sourceRef="Activity_1cdmv9e" targetRef="Activity_1ytjmip" />\n    <bpmn:task id="Activity_1ytjmip" name="Call contact person">\n      <bpmn:incoming>Flow_0lc8bzg</bpmn:incoming>\n      <bpmn:incoming>Flow_0u05ak6</bpmn:incoming>\n      <bpmn:outgoing>Flow_1buieab</bpmn:outgoing>\n      <bpmn:property id="Property_1xlynd5" name="__targetRef_placeholder" />\n      <bpmn:dataInputAssociation id="DataInputAssociation_0qqnbo3">\n        <bpmn:sourceRef>DataObjectReference_0ftcqh8</bpmn:sourceRef>\n        <bpmn:targetRef>Property_1xlynd5</bpmn:targetRef>\n      </bpmn:dataInputAssociation>\n    </bpmn:task>\n    <bpmn:dataObjectReference id="DataObjectReference_0ftcqh8" name="Top 5 Leads" dataObjectRef="DataObject_1k5cbdy" />\n    <bpmn:dataObject id="DataObject_1k5cbdy" isCollection="true" />\n    <bpmn:sequenceFlow id="Flow_1buieab" sourceRef="Activity_1ytjmip" targetRef="Gateway_0dsfw2y" />\n    <bpmn:inclusiveGateway id="Gateway_0dsfw2y">\n      <bpmn:incoming>Flow_1buieab</bpmn:incoming>\n      <bpmn:outgoing>Flow_0eudwll</bpmn:outgoing>\n      <bpmn:outgoing>Flow_0u05ak6</bpmn:outgoing>\n      <bpmn:outgoing>Flow_1b3vjvl</bpmn:outgoing>\n    </bpmn:inclusiveGateway>\n    <bpmn:sequenceFlow id="Flow_0eudwll" name="interested" sourceRef="Gateway_0dsfw2y" targetRef="Activity_1te7a2s" />\n    <bpmn:task id="Activity_1te7a2s" name="Process lead">\n      <bpmn:incoming>Flow_0eudwll</bpmn:incoming>\n      <bpmn:outgoing>Flow_0rwkda5</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:sequenceFlow id="Flow_0u05ak6" name="more leads" sourceRef="Gateway_0dsfw2y" targetRef="Activity_1ytjmip" />\n    <bpmn:endEvent id="Event_15lagi1" name="Lead processed">\n      <bpmn:incoming>Flow_0rwkda5</bpmn:incoming>\n    </bpmn:endEvent>\n    <bpmn:sequenceFlow id="Flow_0rwkda5" sourceRef="Activity_1te7a2s" targetRef="Event_15lagi1" />\n    <bpmn:sequenceFlow id="Flow_1b3vjvl" name="no more leads" sourceRef="Gateway_0dsfw2y" targetRef="Event_0t2adol" />\n    <bpmn:endEvent id="Event_0t2adol" name="All Leads contacted">\n      <bpmn:incoming>Flow_1b3vjvl</bpmn:incoming>\n    </bpmn:endEvent>\n  </bpmn:process>\n              '}]
+
+######### Generated Textual Process Description #########
+
+The "Lead Processing" process begins every Monday morning. The process is divided into two lanes, one for the Manager and one for the Sales Assistant.
+
+The Manager starts the process by checking open leads. After checking the open leads, the Manager selects the top five leads. The selected leads are then passed to the Sales Assistant.
+
+The Sales Assistant calls the contact person for each lead. After calling, the process reaches an inclusive gateway. 
+
+If the contact person is interested, the lead is processed by the Manager. After processing, the lead is considered processed and the process ends.
+
+If there are more leads to contact, the Sales Assistant goes back to calling the contact person for the next lead.
+
+If there are no more leads to contact, the process ends with all leads being contacted.
+
+######### Token data #########
+
+usage_prompt_tokens: 1756
+usage_completion_tokens: 156
+usage_total_tokens: 1912
+num_sentences: 11
+num_words: 155

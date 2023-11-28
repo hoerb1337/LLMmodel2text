@@ -1,0 +1,35 @@
+######### Experiment Setup #########
+
+Date Experiment: 2023-09-15 22:40:18.691908
+Demonstration BPMN model: None
+BPMN model to explain: 10-1
+Round of prompt engineering for this model: 5
+max_tokens: 1931
+n: 1
+temperature: 0.0
+
+######### Query used #########
+
+[{'role': 'system', 'content': 'You are an expert Q&A system with expert knowledge on the business process modeling language BPMN. Assume you have created a BPMN model. Now you want to explain your BPMN model to users without knowledge on BPMN notation. Consider the standard BPMN 2.0.2 specification.'}, {'role': 'user', 'content': 'Consider the standard BPMN 2.0.2 specification. Please create a textual process description for following BPMN model "Dismissal" serialised in XML. Do not add any information that is not described in the given BPMN model. Your generated textual process description should enable users to map the relationship of the model generated description.\n\n                        BPMN model "Dismissal" serialised in XML:\n                        \n        <?xml version="1.0" encoding="UTF-8"?>\n<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0d4yo4w" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">\n  <bpmn:collaboration id="Collaboration_025rpm1">\n    <bpmn:participant id="Participant_1obx1tg" name="MPON" processRef="Process_0jiqp1q" />\n    <bpmn:participant id="Participant_053s68v" name="MPOO" processRef="Process_0k5qn9u" />\n    <bpmn:messageFlow id="Flow_1j93cbj" sourceRef="Event_0ist9rc" targetRef="Event_1666gk2" />\n    <bpmn:messageFlow id="Flow_0xep3r3" sourceRef="Activity_0cmdnu1" targetRef="Event_0ilh49g" />\n    <bpmn:messageFlow id="Flow_17z6n52" sourceRef="Activity_1rzt0ml" targetRef="Event_0ilh49g" />\n  </bpmn:collaboration>\n  <bpmn:process id="Process_0jiqp1q" isExecutable="true">\n    <bpmn:startEvent id="Event_0eyhzem">\n      <bpmn:outgoing>Flow_0n48zo3</bpmn:outgoing>\n    </bpmn:startEvent>\n    <bpmn:task id="Activity_0bt95vs" name="Dismissal">\n      <bpmn:incoming>Flow_0n48zo3</bpmn:incoming>\n      <bpmn:outgoing>Flow_1z0efvy</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:intermediateThrowEvent id="Event_0ist9rc">\n      <bpmn:incoming>Flow_1z0efvy</bpmn:incoming>\n      <bpmn:outgoing>Flow_0fvubwe</bpmn:outgoing>\n      <bpmn:messageEventDefinition id="MessageEventDefinition_0ocxbrq" />\n    </bpmn:intermediateThrowEvent>\n    <bpmn:intermediateCatchEvent id="Event_0ilh49g">\n      <bpmn:incoming>Flow_0fvubwe</bpmn:incoming>\n      <bpmn:outgoing>Flow_1rjjmwk</bpmn:outgoing>\n      <bpmn:messageEventDefinition id="MessageEventDefinition_1fhp8s7" />\n    </bpmn:intermediateCatchEvent>\n    <bpmn:endEvent id="Event_13l02w0">\n      <bpmn:incoming>Flow_1rjjmwk</bpmn:incoming>\n    </bpmn:endEvent>\n    <bpmn:sequenceFlow id="Flow_0n48zo3" sourceRef="Event_0eyhzem" targetRef="Activity_0bt95vs" />\n    <bpmn:sequenceFlow id="Flow_1z0efvy" sourceRef="Activity_0bt95vs" targetRef="Event_0ist9rc" />\n    <bpmn:sequenceFlow id="Flow_0fvubwe" sourceRef="Event_0ist9rc" targetRef="Event_0ilh49g" />\n    <bpmn:sequenceFlow id="Flow_1rjjmwk" sourceRef="Event_0ilh49g" targetRef="Event_13l02w0" />\n  </bpmn:process>\n  <bpmn:process id="Process_0k5qn9u" isExecutable="false">\n    <bpmn:startEvent id="Event_1666gk2">\n      <bpmn:outgoing>Flow_1c9m9i2</bpmn:outgoing>\n      <bpmn:messageEventDefinition id="MessageEventDefinition_0udlc4h" />\n    </bpmn:startEvent>\n    <bpmn:task id="Activity_1j4miod" name="Review">\n      <bpmn:incoming>Flow_1c9m9i2</bpmn:incoming>\n      <bpmn:outgoing>Flow_1x3rwvg</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:exclusiveGateway id="Gateway_0y54sdy">\n      <bpmn:incoming>Flow_1x3rwvg</bpmn:incoming>\n      <bpmn:outgoing>Flow_099rxzb</bpmn:outgoing>\n      <bpmn:outgoing>Flow_14w7n4g</bpmn:outgoing>\n    </bpmn:exclusiveGateway>\n    <bpmn:sendTask id="Activity_0cmdnu1" name="Rejection of the dismissal">\n      <bpmn:incoming>Flow_099rxzb</bpmn:incoming>\n      <bpmn:outgoing>Flow_11xpfra</bpmn:outgoing>\n    </bpmn:sendTask>\n    <bpmn:endEvent id="Event_1mqpes7">\n      <bpmn:incoming>Flow_11xpfra</bpmn:incoming>\n    </bpmn:endEvent>\n    <bpmn:sendTask id="Activity_1rzt0ml" name="Confirmation of the dismissal">\n      <bpmn:incoming>Flow_14w7n4g</bpmn:incoming>\n      <bpmn:outgoing>Flow_0vmyio8</bpmn:outgoing>\n    </bpmn:sendTask>\n    <bpmn:endEvent id="Event_0utt6pu">\n      <bpmn:incoming>Flow_0vmyio8</bpmn:incoming>\n    </bpmn:endEvent>\n    <bpmn:sequenceFlow id="Flow_1c9m9i2" sourceRef="Event_1666gk2" targetRef="Activity_1j4miod" />\n    <bpmn:sequenceFlow id="Flow_1x3rwvg" sourceRef="Activity_1j4miod" targetRef="Gateway_0y54sdy" />\n    <bpmn:sequenceFlow id="Flow_099rxzb" sourceRef="Gateway_0y54sdy" targetRef="Activity_0cmdnu1" />\n    <bpmn:sequenceFlow id="Flow_14w7n4g" sourceRef="Gateway_0y54sdy" targetRef="Activity_1rzt0ml" />\n    <bpmn:sequenceFlow id="Flow_11xpfra" sourceRef="Activity_0cmdnu1" targetRef="Event_1mqpes7" />\n    <bpmn:sequenceFlow id="Flow_0vmyio8" sourceRef="Activity_1rzt0ml" targetRef="Event_0utt6pu" />\n  </bpmn:process>\n              '}]
+
+######### Generated Textual Process Description #########
+
+The BPMN model "Dismissal" describes a process involving two participants: MPON and MPOO. 
+
+The process starts with MPON. The start event triggers a task named "Dismissal". Once the "Dismissal" task is completed, it triggers an intermediate throw event. This event sends a message to MPOO's start event. 
+
+MPOO's process begins with a start event that triggers a task named "Review". After the "Review" task, the process reaches an exclusive gateway. This gateway represents a decision point where the process can take one of two paths based on certain conditions.
+
+One path from the gateway leads to a send task named "Rejection of the dismissal". This task sends a message back to MPON's intermediate catch event. After receiving the message, MPON's process continues to an end event, concluding the process.
+
+The other path from the gateway leads to a send task named "Confirmation of the dismissal". This task also sends a message back to MPON's intermediate catch event. After receiving the message, MPON's process continues to the same end event, concluding the process.
+
+In summary, MPON initiates a "Dismissal" task, which is reviewed by MPOO. Based on the review, MPOO either confirms or rejects the dismissal, and communicates the decision back to MPON, ending the process.
+
+######### Token data #########
+
+usage_prompt_tokens: 1869
+usage_completion_tokens: 278
+usage_total_tokens: 2147
+num_sentences: 16
+num_words: 255
