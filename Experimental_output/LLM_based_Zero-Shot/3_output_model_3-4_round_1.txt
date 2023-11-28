@@ -1,0 +1,33 @@
+######### Experiment Setup #########
+
+Date Experiment: 2023-09-09 14:52:53.063349
+Demonstration BPMN model: None
+BPMN model to explain: 3-4
+Round of prompt engineering for this model: 1
+max_tokens: 2000
+n: 1
+temperature: 0.0
+
+######### Query used #########
+
+[{'role': 'user', 'content': '\n            Consider the standard BPMN 2.0.2 specification. Please create a textual process description for following BPMN model "Survey" serialised in XML.\n\n            BPMN model "Survey" serialised in XML:\n            <?xml version="1.0" encoding="UTF-8"?>\n<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0avwck9" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">\n  <bpmn:process id="Process_0iqqkdv" isExecutable="true">\n    <bpmn:task id="Activity_125xekq" name="Send Questionnaire">\n      <bpmn:outgoing>Flow_10qjp5p</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:exclusiveGateway id="Gateway_13hpysg">\n      <bpmn:incoming>Flow_10qjp5p</bpmn:incoming>\n      <bpmn:incoming>Flow_1nuv4ku</bpmn:incoming>\n      <bpmn:outgoing>Flow_1wrf9jy</bpmn:outgoing>\n    </bpmn:exclusiveGateway>\n    <bpmn:sequenceFlow id="Flow_10qjp5p" sourceRef="Activity_125xekq" targetRef="Gateway_13hpysg" />\n    <bpmn:sequenceFlow id="Flow_1wrf9jy" sourceRef="Gateway_13hpysg" targetRef="Gateway_0g66doz" />\n    <bpmn:eventBasedGateway id="Gateway_0g66doz">\n      <bpmn:incoming>Flow_1wrf9jy</bpmn:incoming>\n      <bpmn:outgoing>Flow_0nctwvk</bpmn:outgoing>\n      <bpmn:outgoing>Flow_1r74ggu</bpmn:outgoing>\n    </bpmn:eventBasedGateway>\n    <bpmn:intermediateCatchEvent id="Event_0qahgbr" name="Filled Questionnaire Received">\n      <bpmn:incoming>Flow_0nctwvk</bpmn:incoming>\n      <bpmn:outgoing>Flow_0yc90va</bpmn:outgoing>\n      <bpmn:messageEventDefinition id="MessageEventDefinition_0qe6kg1" />\n    </bpmn:intermediateCatchEvent>\n    <bpmn:sequenceFlow id="Flow_0nctwvk" sourceRef="Gateway_0g66doz" targetRef="Event_0qahgbr" />\n    <bpmn:intermediateThrowEvent id="Event_0nugnpi">\n      <bpmn:incoming>Flow_0yc90va</bpmn:incoming>\n      <bpmn:linkEventDefinition id="LinkEventDefinition_036cqyk" name="" />\n    </bpmn:intermediateThrowEvent>\n    <bpmn:sequenceFlow id="Flow_0yc90va" sourceRef="Event_0qahgbr" targetRef="Event_0nugnpi" />\n    <bpmn:intermediateCatchEvent id="Event_0igom5c" name="After 5 days">\n      <bpmn:incoming>Flow_1r74ggu</bpmn:incoming>\n      <bpmn:outgoing>Flow_0rv8oax</bpmn:outgoing>\n      <bpmn:timerEventDefinition id="TimerEventDefinition_0ynkx22" />\n    </bpmn:intermediateCatchEvent>\n    <bpmn:sequenceFlow id="Flow_1r74ggu" sourceRef="Gateway_0g66doz" targetRef="Event_0igom5c" />\n    <bpmn:task id="Activity_1kti66m" name="Send reminder">\n      <bpmn:incoming>Flow_0rv8oax</bpmn:incoming>\n      <bpmn:outgoing>Flow_1nuv4ku</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:sequenceFlow id="Flow_0rv8oax" sourceRef="Event_0igom5c" targetRef="Activity_1kti66m" />\n    <bpmn:sequenceFlow id="Flow_1nuv4ku" sourceRef="Activity_1kti66m" targetRef="Gateway_13hpysg" />\n  </bpmn:process>\n\t          '}]
+
+######### Generated Textual Process Description #########
+
+The process "Survey" begins with the task "Send Questionnaire". After the questionnaire is sent, the process reaches an exclusive gateway. 
+
+From this gateway, the process can follow two paths. One path leads to an event-based gateway. From this event-based gateway, the process can again follow two paths. 
+
+One path leads to an intermediate catch event "Filled Questionnaire Received". Once the filled questionnaire is received, the process proceeds to an intermediate throw event and then ends. 
+
+The other path from the event-based gateway leads to another intermediate catch event "After 5 days". If 5 days pass without the filled questionnaire being received, the process proceeds to the task "Send reminder". After the reminder is sent, the process loops back to the exclusive gateway. 
+
+The other path from the first exclusive gateway also leads back to this gateway, creating a loop in the process. This loop continues until the filled questionnaire is received, at which point the process ends.
+
+######### Token data #########
+
+usage_prompt_tokens: 1154
+usage_completion_tokens: 194
+usage_total_tokens: 1348
+num_sentences: 12
+num_words: 187
