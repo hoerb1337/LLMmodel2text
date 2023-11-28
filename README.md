@@ -1,1 +1,2 @@
-# Master's Thesis "An explorative study on using LLMs to explain process models"
+Master's Thesis: 
+# "An explorative study on using LLMs to explain process models"
