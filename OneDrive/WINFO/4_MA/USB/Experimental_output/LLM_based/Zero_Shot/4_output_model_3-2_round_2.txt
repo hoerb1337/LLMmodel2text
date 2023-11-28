@@ -1,0 +1,49 @@
+######### Experiment Setup #########
+
+Date Experiment: 2023-09-09 15:15:22.405398
+Demonstration BPMN model: None
+BPMN model to explain: 3-2
+Round of prompt engineering for this model: 2
+max_tokens: 2000
+n: 1
+temperature: 0.0
+
+######### Query used #########
+
+[{'role': 'system', 'content': 'You are an expert Q&A system with expert knowledge on the business process modeling language BPMN. Assume you have created a BPMN model. Now you want to explain your BPMN model to users without knowledge on BPMN notation. Consider the standard BPMN 2.0.2 specification.'}, {'role': 'user', 'content': '\n            Consider the standard BPMN 2.0.2 specification. Please create a textual process description for following BPMN model "Law Files" serialised in XML.\n\n            BPMN model "Law Files" serialised in XML:\n            <?xml version="1.0" encoding="UTF-8"?>\n<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0yq11qu" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">\n  <bpmn:process id="Process_0zysu87" isExecutable="true">\n    <bpmn:task id="Activity_1taepli" name="Check Files">\n      <bpmn:outgoing>Flow_0aq02ap</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:exclusiveGateway id="Gateway_0b4rynd">\n      <bpmn:incoming>Flow_0aq02ap</bpmn:incoming>\n      <bpmn:outgoing>Flow_1jwnwml</bpmn:outgoing>\n      <bpmn:outgoing>Flow_0wlu7ri</bpmn:outgoing>\n    </bpmn:exclusiveGateway>\n    <bpmn:sequenceFlow id="Flow_0aq02ap" sourceRef="Activity_1taepli" targetRef="Gateway_0b4rynd" />\n    <bpmn:task id="Activity_1615g0b" name="Initiate Search">\n      <bpmn:incoming>Flow_1jwnwml</bpmn:incoming>\n      <bpmn:outgoing>Flow_1ajrqfa</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:sequenceFlow id="Flow_1jwnwml" name="missing files" sourceRef="Gateway_0b4rynd" targetRef="Activity_1615g0b" />\n    <bpmn:exclusiveGateway id="Gateway_17wafhf">\n      <bpmn:incoming>Flow_0wlu7ri</bpmn:incoming>\n      <bpmn:incoming>Flow_1ajrqfa</bpmn:incoming>\n      <bpmn:outgoing>Flow_0268dw1</bpmn:outgoing>\n    </bpmn:exclusiveGateway>\n    <bpmn:sequenceFlow id="Flow_0wlu7ri" name="no missing files" sourceRef="Gateway_0b4rynd" targetRef="Gateway_17wafhf" />\n    <bpmn:sequenceFlow id="Flow_1ajrqfa" sourceRef="Activity_1615g0b" targetRef="Gateway_17wafhf" />\n    <bpmn:task id="Activity_0lasa41" name="Track Physical Files">\n      <bpmn:incoming>Flow_0268dw1</bpmn:incoming>\n      <bpmn:outgoing>Flow_0ajgsyt</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:sequenceFlow id="Flow_0268dw1" sourceRef="Gateway_17wafhf" targetRef="Activity_0lasa41" />\n    <bpmn:sequenceFlow id="Flow_0ajgsyt" sourceRef="Activity_0lasa41" targetRef="Gateway_0xwba1q" />\n    <bpmn:parallelGateway id="Gateway_0xwba1q">\n      <bpmn:incoming>Flow_0ajgsyt</bpmn:incoming>\n      <bpmn:outgoing>Flow_0b3p8g3</bpmn:outgoing>\n      <bpmn:outgoing>Flow_0tto4lp</bpmn:outgoing>\n    </bpmn:parallelGateway>\n    <bpmn:task id="Activity_0ba770z" name="Hand Files to Associate">\n      <bpmn:incoming>Flow_0b3p8g3</bpmn:incoming>\n      <bpmn:outgoing>Flow_08w9im7</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:sequenceFlow id="Flow_0b3p8g3" sourceRef="Gateway_0xwba1q" targetRef="Activity_0ba770z" />\n    <bpmn:task id="Activity_1rgpe84" name="Distribute Judge&#39;s Lawlist">\n      <bpmn:incoming>Flow_0tto4lp</bpmn:incoming>\n      <bpmn:outgoing>Flow_15shi1r</bpmn:outgoing>\n    </bpmn:task>\n    <bpmn:sequenceFlow id="Flow_0tto4lp" sourceRef="Gateway_0xwba1q" targetRef="Activity_1rgpe84" />\n    <bpmn:parallelGateway id="Gateway_070utmt">\n      <bpmn:incoming>Flow_15shi1r</bpmn:incoming>\n      <bpmn:incoming>Flow_08w9im7</bpmn:incoming>\n      <bpmn:outgoing>Flow_0ke018d</bpmn:outgoing>\n    </bpmn:parallelGateway>\n    <bpmn:sequenceFlow id="Flow_15shi1r" sourceRef="Activity_1rgpe84" targetRef="Gateway_070utmt" />\n    <bpmn:sequenceFlow id="Flow_08w9im7" sourceRef="Activity_0ba770z" targetRef="Gateway_070utmt" />\n    <bpmn:task id="Activity_1cay2f3" name="Conduct Directions">\n      <bpmn:incoming>Flow_0ke018d</bpmn:incoming>\n    </bpmn:task>\n    <bpmn:sequenceFlow id="Flow_0ke018d" sourceRef="Gateway_070utmt" targetRef="Activity_1cay2f3" />\n  </bpmn:process>\n\t          '}]
+
+######### Generated Textual Process Description #########
+
+The BPMN model "Law Files" describes a process flow in a legal context. Here is a simplified textual description of the process:
+
+1. The process starts with the task "Check Files". This could involve verifying the completeness and correctness of legal files.
+
+2. After checking the files, the process reaches a decision point, represented by an exclusive gateway. This gateway has two outgoing paths, each representing a different condition: "missing files" and "no missing files".
+
+3. If there are missing files, the process moves to the task "Initiate Search". This task could involve starting a process to locate the missing files.
+
+4. If there are no missing files, the process skips the "Initiate Search" task and moves directly to the next decision point, represented by another exclusive gateway.
+
+5. After the "Initiate Search" task (if it was necessary), the process also reaches the second exclusive gateway.
+
+6. From this second gateway, the process moves to the task "Track Physical Files". This could involve keeping track of the physical location of the legal files.
+
+7. After tracking the physical files, the process reaches a parallel gateway. This gateway splits the process into two concurrent paths.
+
+8. One path leads to the task "Hand Files to Associate". This could involve physically handing over the legal files to an associate.
+
+9. The other path leads to the task "Distribute Judge's Lawlist". This could involve distributing a list of legal cases to a judge.
+
+10. After both of these tasks are completed, the process reaches another parallel gateway. This gateway merges the two concurrent paths back into a single path.
+
+11. The final task in the process is "Conduct Directions". This could involve conducting a directions hearing, a type of court hearing where the judge gives instructions for the future conduct of the case.
+
+Please note that the exact interpretation of the tasks and gateways can vary depending on the specific context and requirements of the legal process being modeled.
+
+######### Token data #########
+
+usage_prompt_tokens: 1569
+usage_completion_tokens: 397
+usage_total_tokens: 1966
+num_sentences: 33
+num_words: 397
