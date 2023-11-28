@@ -1,0 +1,51 @@
+BPMN model "Example" serialised in XML:
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1x767qx" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+  <bpmn:collaboration id="Collaboration_1a32ji5">
+    <bpmn:participant id="Participant_162ui5k" name="Supplier" processRef="Process_17uzqt4" />
+    <bpmn:participant id="Participant_1ug52fc" name="Assembler AG" processRef="Process_0yqlgvw" />
+    <bpmn:messageFlow id="Flow_0xbqisa" sourceRef="Activity_05ur72l" targetRef="Activity_0dv571v" />
+    <bpmn:messageFlow id="Flow_13qagn9" sourceRef="Activity_1tr0g0r" targetRef="Activity_0hw1wev" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_17uzqt4" isExecutable="true">
+    <bpmn:task id="Activity_0dv571v" name="Process Order">
+      <bpmn:outgoing>Flow_1y50ogp</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_1tr0g0r" name="Send Invoice">
+      <bpmn:incoming>Flow_1y50ogp</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_1y50ogp" sourceRef="Activity_0dv571v" targetRef="Activity_1tr0g0r" />
+  </bpmn:process>
+  <bpmn:process id="Process_0yqlgvw" isExecutable="false">
+    <bpmn:startEvent id="Event_0whvdvf" name="1st each month">
+      <bpmn:outgoing>Flow_0gue98o</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_11ca7lk" />
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_05ur72l" name="Create Order">
+      <bpmn:incoming>Flow_0gue98o</bpmn:incoming>
+      <bpmn:outgoing>Flow_149sld7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_0hw1wev" name="Receive Invoice">
+      <bpmn:incoming>Flow_149sld7</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nnkzh5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_0s53iso">
+      <bpmn:incoming>Flow_1nnkzh5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0gue98o" sourceRef="Event_0whvdvf" targetRef="Activity_05ur72l" />
+    <bpmn:sequenceFlow id="Flow_149sld7" sourceRef="Activity_05ur72l" targetRef="Activity_0hw1wev" />
+    <bpmn:sequenceFlow id="Flow_1nnkzh5" sourceRef="Activity_0hw1wev" targetRef="Event_0s53iso" />
+  </bpmn:process>
+
+Corresponding textual process description for the BPMN model "Example":
+The "Ordering" process involves two main pools as participants: "Supplier" and "Assembler AG". A Pool is the graphical representation of a Participant in a Collaboration.
+
+The process starts at "Assembler AG" with the timer start event "1st each month". A timer start event is triggered by a defined time-date or cycle (e.g., every Monday at 9am). In this case, the timer start event is triggered on the 1st of each month. After the start event is triggered, the first task is "Create Order". A Task is an atomic Activity that is included within a Process. A Task is used when the work in the Process is not broken down to a finer level of Process detail. In this case, the task involves creating an order. 
+
+Once the order is created, it is sent to the "Supplier" via a message flow. This is represented by the message flow from "Create Order" in the Assembler AG pool to "Process Order" in the Supplier pool. A Message Flow is used to show the flow of Messages between two Participants that are prepared to send and receive them. While the Assembler Ag then waits for the invoice, the "Supplier" processes the order, which is represented by the task "Process Order".
+
+After processing the order, the "Supplier" sends an invoice to "Assembler AG" in the task "Send Invoice". This is represented by the message flow from "Send Invoice" in the "Supplier" pool to "Receive Invoice" in the Assembler AG pool. The task "Receive Invoice" at "Assembler AG" represents the receipt of the invoice from the "Supplier".
+
+Finally, the process at "Assembler AG" ends after the invoice is received. This is represented by the end event following the "Receive Invoice" task. The End Event indicates where a Process will end.
+
+In summary, the process involves creating an order at "Assembler AG", sending it to the "Supplier", processing the order at the "Supplier", sending an invoice back to "Assembler AG", and receiving the invoice at "Assembler AG".

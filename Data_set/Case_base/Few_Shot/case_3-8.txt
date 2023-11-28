@@ -1,0 +1,113 @@
+BPMN model "Example" serialised in XML:
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0olsr0n" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+  <bpmn:collaboration id="Collaboration_0iz0an2">
+    <bpmn:participant id="Participant_0a7q4v0" name="Customer" processRef="Process_1ewbob1" />
+    <bpmn:participant id="Participant_18a5p3c" name="Car Insurer" processRef="Process_01tezej" />
+    <bpmn:participant id="Participant_0f0onrm" name="Garage" processRef="Process_1frlouu" />
+    <bpmn:messageFlow id="Flow_0rr1xln" name="Claim documentation" sourceRef="Participant_0a7q4v0" targetRef="Activity_0686hn9" />
+    <bpmn:messageFlow id="Flow_02apfuz" name="Damage information" sourceRef="Activity_072pala" targetRef="Participant_0f0onrm" />
+    <bpmn:messageFlow id="Flow_1474a18" name="Payment details" sourceRef="Activity_16bxegr" targetRef="Participant_0f0onrm" />
+    <bpmn:messageFlow id="Flow_0oqbxrj" name="Notification letter" sourceRef="Activity_19c3fj0" targetRef="Participant_0a7q4v0" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1ewbob1" isExecutable="true" />
+  <bpmn:process id="Process_01tezej" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_0gi7qfp">
+      <bpmn:lane id="Lane_0ok7kee" name="Notification department">
+        <bpmn:flowNodeRef>Event_11hpg0d</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0686hn9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1ydrt60</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_0au7c02" name="Handling department">
+        <bpmn:flowNodeRef>Activity_1awfkpk</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0xogugs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0wp3q6n</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0ymp5qo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_072pala</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_16bxegr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_19776w0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_19c3fj0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1lkae47</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Event_11hpg0d">
+      <bpmn:outgoing>Flow_1200nwn</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_0686hn9" name="Check documentation">
+      <bpmn:incoming>Flow_1200nwn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gf4417</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_1ydrt60" name="Register claim">
+      <bpmn:incoming>Flow_1gf4417</bpmn:incoming>
+      <bpmn:outgoing>Flow_1d5516w</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_1awfkpk" name="Check insurance">
+      <bpmn:incoming>Flow_1d5516w</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lvov8u</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_0xogugs" name="Perform assessmet">
+      <bpmn:incoming>Flow_0lvov8u</bpmn:incoming>
+      <bpmn:outgoing>Flow_0htr0cu</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_0wp3q6n">
+      <bpmn:incoming>Flow_0htr0cu</bpmn:incoming>
+      <bpmn:outgoing>Flow_18bi0f6</bpmn:outgoing>
+      <bpmn:outgoing>Flow_150xx07</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_0ymp5qo" name="Reject claim">
+      <bpmn:incoming>Flow_18bi0f6</bpmn:incoming>
+      <bpmn:outgoing>Flow_1y1umcr</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_072pala" name="Arrange repair">
+      <bpmn:incoming>Flow_150xx07</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wpewwy</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_16bxegr" name="Schedule payment">
+      <bpmn:incoming>Flow_1wpewwy</bpmn:incoming>
+      <bpmn:outgoing>Flow_16r8wmw</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_19776w0">
+      <bpmn:incoming>Flow_1y1umcr</bpmn:incoming>
+      <bpmn:incoming>Flow_16r8wmw</bpmn:incoming>
+      <bpmn:outgoing>Flow_14udxnf</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_19c3fj0" name="Notify customer">
+      <bpmn:incoming>Flow_14udxnf</bpmn:incoming>
+      <bpmn:outgoing>Flow_0bx1bv1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_1lkae47">
+      <bpmn:incoming>Flow_0bx1bv1</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1200nwn" sourceRef="Event_11hpg0d" targetRef="Activity_0686hn9" />
+    <bpmn:sequenceFlow id="Flow_1gf4417" sourceRef="Activity_0686hn9" targetRef="Activity_1ydrt60" />
+    <bpmn:sequenceFlow id="Flow_1d5516w" sourceRef="Activity_1ydrt60" targetRef="Activity_1awfkpk" />
+    <bpmn:sequenceFlow id="Flow_0lvov8u" sourceRef="Activity_1awfkpk" targetRef="Activity_0xogugs" />
+    <bpmn:sequenceFlow id="Flow_0htr0cu" sourceRef="Activity_0xogugs" targetRef="Gateway_0wp3q6n" />
+    <bpmn:sequenceFlow id="Flow_18bi0f6" sourceRef="Gateway_0wp3q6n" targetRef="Activity_0ymp5qo" />
+    <bpmn:sequenceFlow id="Flow_150xx07" sourceRef="Gateway_0wp3q6n" targetRef="Activity_072pala" />
+    <bpmn:sequenceFlow id="Flow_1y1umcr" sourceRef="Activity_0ymp5qo" targetRef="Gateway_19776w0" />
+    <bpmn:sequenceFlow id="Flow_1wpewwy" sourceRef="Activity_072pala" targetRef="Activity_16bxegr" />
+    <bpmn:sequenceFlow id="Flow_16r8wmw" sourceRef="Activity_16bxegr" targetRef="Gateway_19776w0" />
+    <bpmn:sequenceFlow id="Flow_14udxnf" sourceRef="Gateway_19776w0" targetRef="Activity_19c3fj0" />
+    <bpmn:sequenceFlow id="Flow_0bx1bv1" sourceRef="Activity_19c3fj0" targetRef="Event_1lkae47" />
+  </bpmn:process>
+  <bpmn:process id="Process_1frlouu" isExecutable="false" />
+
+Corresponding textual process description for the BPMN model "Example":
+The process "Claims Car Insurance" involves three pools as participants: the Customer, the Car Insurer, and the Garage. A Pool is the graphical representation of a Participant in a Collaboration.  
+
+Within the Car Insurer, there are two roles involved reflected in three different lanes within the pool: the Notification department and the Handling department. A Lane is a sub-partition within a Pool and will extend the entire length of the Pool. Lanes are used to organize and categorize Activities. 
+
+The process begins with a start event in the "Notification department" lane". As the name implies, the Start Event indicates where a particular Process will start. 
+
+The Notification department first checks the "claim documentation" within the task "Check documentation". A Task is an atomic Activity that is included within a Process. A Task is used when the work in the Process is not broken down to a finer level of Process detail. In this case, the task requires Notification department to receive the message "claim documentation", which is sent by the "Customer" via a message flow. A Message Flow is used to show the flow of Messages between two Participants that are prepared to send and receive them. Once the documentation is checked, the claim is registered within the task "Register claim".
+
+The Handling department then takes over. They first check the insurance in the task "Check Insurance". Once the insurance is verified, they perform an assessment in the task "Perform assessment". Based on the assessment, a decision is made at an exclusive gateway.  A diverging Exclusive Gateway (Decision) is used to create alternative paths within a Process flow, whereas only one of the paths can be taken.
+
+If the claim is rejected, the "Reject claim" task is performed. If the claim is accepted, the insurer arranges for repair with the Garage in the task "Arrange repair" by sending the "Damage information" to the Garage via a message flow. 
+
+Once the repair is arranged, the insurer schedules the payment in the task "Schedule payment". The "Payment details" are also sent to the Garage via a message flow. 
+
+After either rejecting the claim or scheduling the payment, both path follow the path to the joining exclusive gateway. The Handling department notifies the customer in the task "Notify customer" by sending a "Notification letter" to the Customer via a message flow. 
+
+The process ends once the customer has been notified with an end event. The End Event indicates where a Process will end.

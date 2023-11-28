@@ -1,0 +1,340 @@
+Case 8-4: 03_Job Posting_Appointment_G
+Context of process: Human Resources
+
+BPMN model serialised in XML:
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1yj3rmc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0">
+  <bpmn:collaboration id="Collaboration_01dkzva">
+    <bpmn:participant id="Participant_17hvhqf" name="03_Job Posting_Appointment_G" processRef="Process_1" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0evgv3w">
+      <bpmn:lane id="Lane_1twxq7z" name="President&#39;s Office">
+        <bpmn:flowNodeRef>UserTask_0f7ha11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateThrowEvent_1x5zdt8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_0a61y19</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1cgdkrc" name="Faculty">
+        <bpmn:flowNodeRef>StartEvent_0mki6ak</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ParallelGateway_1r9j8mq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ParallelGateway_01y8nqr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_14dqay2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_1xmqi15</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_0tay5vq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_0425eeq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_1jvcvba</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_03ov3k5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_0qakidd</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_0ik5i8n</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ParallelGateway_04rquo1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_125667i</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateCatchEvent_0sixx9g</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateCatchEvent_1vdbxzh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_03iyqpu</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ParallelGateway_13o1tc1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_0h4cwwl</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateCatchEvent_0hp85kq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_15dy5vf</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_0bdaoaw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_0ltu562</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ParallelGateway_1rilztq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateCatchEvent_1qy83gc</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ParallelGateway_17fcltq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_095gw6w</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_0rwr9op</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0iutg90</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1lmwbvg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_1f04082</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_0nfs6i2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_1nlogep</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_0bxpjn2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_15s431c</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_0gyc364" name="Academic Senate">
+        <bpmn:flowNodeRef>IntermediateCatchEvent_064mal5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_13hrslx</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_161azk7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_0fnw8rk</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_129omxq</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1bbv5q4" name="ABL">
+        <bpmn:flowNodeRef>IntermediateCatchEvent_0258crt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_1vxcnc4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_079qwbh</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1rivjef" name="Equal opportunity commissioner">
+        <bpmn:flowNodeRef>IntermediateCatchEvent_1xenhq3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_0qdfdg9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_01zblc5</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:sequenceFlow id="SequenceFlow_1eb2fk2" sourceRef="UserTask_0fnw8rk" targetRef="SendTask_129omxq" />
+    <bpmn:sequenceFlow id="SequenceFlow_01xje5g" sourceRef="UserTask_13hrslx" targetRef="UserTask_0fnw8rk" />
+    <bpmn:sequenceFlow id="SequenceFlow_0x9empm" sourceRef="UserTask_161azk7" targetRef="UserTask_13hrslx" />
+    <bpmn:sequenceFlow id="SequenceFlow_0563v20" sourceRef="IntermediateCatchEvent_064mal5" targetRef="UserTask_161azk7" />
+    <bpmn:sequenceFlow id="SequenceFlow_0sys11q" sourceRef="SendTask_0bxpjn2" targetRef="IntermediateCatchEvent_064mal5" />
+    <bpmn:sequenceFlow id="SequenceFlow_144qvvo" sourceRef="Task_1lmwbvg" targetRef="ExclusiveGateway_1f04082" />
+    <bpmn:sequenceFlow id="SequenceFlow_1lukr4e" sourceRef="ExclusiveGateway_1f04082" targetRef="Task_0iutg90" />
+    <bpmn:sequenceFlow id="SequenceFlow_0hixs85" sourceRef="Task_0iutg90" targetRef="EndEvent_0rwr9op" />
+    <bpmn:sequenceFlow id="SequenceFlow_13447le" name="No" sourceRef="ExclusiveGateway_095gw6w" targetRef="Task_1lmwbvg" />
+    <bpmn:sequenceFlow id="SequenceFlow_1r6ub49" name="Yes" sourceRef="ExclusiveGateway_095gw6w" targetRef="ExclusiveGateway_1f04082" />
+    <bpmn:sequenceFlow id="SequenceFlow_1qzi9gf" sourceRef="ParallelGateway_17fcltq" targetRef="ExclusiveGateway_095gw6w" />
+    <bpmn:sequenceFlow id="SequenceFlow_0bn8acv" sourceRef="IntermediateCatchEvent_1qy83gc" targetRef="ParallelGateway_17fcltq" />
+    <bpmn:sequenceFlow id="SequenceFlow_0c7e9q8" sourceRef="SendTask_0a61y19" targetRef="IntermediateCatchEvent_1qy83gc" />
+    <bpmn:sequenceFlow id="SequenceFlow_1rv8zd5" sourceRef="ParallelGateway_1rilztq" targetRef="SendTask_15s431c" />
+    <bpmn:sequenceFlow id="SequenceFlow_0d8yy09" sourceRef="SendTask_15s431c" targetRef="IntermediateThrowEvent_1x5zdt8" />
+    <bpmn:sequenceFlow id="SequenceFlow_19klkiw" sourceRef="UserTask_0f7ha11" targetRef="SendTask_0a61y19" />
+    <bpmn:sequenceFlow id="SequenceFlow_0sskxes" sourceRef="IntermediateThrowEvent_1x5zdt8" targetRef="UserTask_0f7ha11" />
+    <bpmn:sequenceFlow id="SequenceFlow_11f0w82" sourceRef="ExclusiveGateway_0bdaoaw" targetRef="ParallelGateway_17fcltq" />
+    <bpmn:sequenceFlow id="SequenceFlow_1hnm67p" sourceRef="UserTask_0ltu562" targetRef="ExclusiveGateway_0bdaoaw" />
+    <bpmn:sequenceFlow id="SequenceFlow_18k59zd" name="No" sourceRef="ExclusiveGateway_15dy5vf" targetRef="UserTask_0ltu562" />
+    <bpmn:sequenceFlow id="SequenceFlow_0utzmsf" name="Yes" sourceRef="ExclusiveGateway_15dy5vf" targetRef="ExclusiveGateway_0bdaoaw" />
+    <bpmn:sequenceFlow id="SequenceFlow_174af0x" sourceRef="IntermediateCatchEvent_0hp85kq" targetRef="ExclusiveGateway_15dy5vf" />
+    <bpmn:sequenceFlow id="SequenceFlow_0y8ixfq" sourceRef="SendTask_129omxq" targetRef="IntermediateCatchEvent_0hp85kq" />
+    <bpmn:sequenceFlow id="SequenceFlow_12ncqkc" sourceRef="UserTask_0h4cwwl" targetRef="SendTask_0bxpjn2" />
+    <bpmn:sequenceFlow id="SequenceFlow_1483c9t" sourceRef="UserTask_1vxcnc4" targetRef="SendTask_079qwbh" />
+    <bpmn:sequenceFlow id="SequenceFlow_08crgax" sourceRef="IntermediateCatchEvent_0258crt" targetRef="UserTask_1vxcnc4" />
+    <bpmn:sequenceFlow id="SequenceFlow_1xwdhy2" sourceRef="SendTask_0nfs6i2" targetRef="IntermediateCatchEvent_0258crt" />
+    <bpmn:sequenceFlow id="SequenceFlow_1j26jrl" sourceRef="UserTask_0qdfdg9" targetRef="SendTask_01zblc5" />
+    <bpmn:sequenceFlow id="SequenceFlow_188s2hk" sourceRef="IntermediateCatchEvent_1xenhq3" targetRef="UserTask_0qdfdg9" />
+    <bpmn:sequenceFlow id="SequenceFlow_00og1zc" sourceRef="SendTask_1nlogep" targetRef="IntermediateCatchEvent_1xenhq3" />
+    <bpmn:sequenceFlow id="SequenceFlow_1nq4dg3" sourceRef="ParallelGateway_13o1tc1" targetRef="UserTask_0h4cwwl" />
+    <bpmn:sequenceFlow id="SequenceFlow_0zpbmdr" sourceRef="ExclusiveGateway_03iyqpu" targetRef="ParallelGateway_13o1tc1" />
+    <bpmn:sequenceFlow id="SequenceFlow_19jrgxc" sourceRef="IntermediateCatchEvent_1vdbxzh" targetRef="ExclusiveGateway_03iyqpu" />
+    <bpmn:sequenceFlow id="SequenceFlow_1dejlnd" sourceRef="SendTask_079qwbh" targetRef="IntermediateCatchEvent_1vdbxzh" />
+    <bpmn:sequenceFlow id="SequenceFlow_11idkqb" sourceRef="IntermediateCatchEvent_0sixx9g" targetRef="ParallelGateway_13o1tc1" />
+    <bpmn:sequenceFlow id="SequenceFlow_0h77fme" sourceRef="SendTask_01zblc5" targetRef="IntermediateCatchEvent_0sixx9g" />
+    <bpmn:sequenceFlow id="SequenceFlow_0tsqa8b" sourceRef="ExclusiveGateway_125667i" targetRef="SendTask_0nfs6i2" />
+    <bpmn:sequenceFlow id="SequenceFlow_0kfpkbx" sourceRef="ExclusiveGateway_125667i" targetRef="ExclusiveGateway_03iyqpu" />
+    <bpmn:sequenceFlow id="SequenceFlow_1phybw2" sourceRef="ParallelGateway_04rquo1" targetRef="SendTask_1nlogep" />
+    <bpmn:sequenceFlow id="SequenceFlow_1vfqsjz" sourceRef="ParallelGateway_04rquo1" targetRef="ExclusiveGateway_125667i" />
+    <bpmn:sequenceFlow id="SequenceFlow_1lnoidc" sourceRef="ParallelGateway_1rilztq" targetRef="ParallelGateway_04rquo1" />
+    <bpmn:sequenceFlow id="SequenceFlow_04vkvou" sourceRef="UserTask_1jvcvba" targetRef="ParallelGateway_1rilztq" />
+    <bpmn:sequenceFlow id="SequenceFlow_0pkyh3t" sourceRef="UserTask_03ov3k5" targetRef="UserTask_1jvcvba" />
+    <bpmn:sequenceFlow id="SequenceFlow_1gytbpu" sourceRef="ExclusiveGateway_0425eeq" targetRef="UserTask_03ov3k5" />
+    <bpmn:sequenceFlow id="SequenceFlow_0j9rxz7" sourceRef="UserTask_0qakidd" targetRef="ExclusiveGateway_0425eeq" />
+    <bpmn:sequenceFlow id="SequenceFlow_1r3byrh" name="Yes" sourceRef="ExclusiveGateway_14dqay2" targetRef="UserTask_0qakidd" />
+    <bpmn:sequenceFlow id="SequenceFlow_0uew48r" name="No" sourceRef="ExclusiveGateway_14dqay2" targetRef="ExclusiveGateway_0425eeq" />
+    <bpmn:sequenceFlow id="SequenceFlow_1tvodxz" sourceRef="ParallelGateway_01y8nqr" targetRef="ExclusiveGateway_14dqay2" />
+    <bpmn:sequenceFlow id="SequenceFlow_03lww7h" sourceRef="UserTask_1xmqi15" targetRef="ParallelGateway_01y8nqr" />
+    <bpmn:sequenceFlow id="SequenceFlow_15qk6jq" sourceRef="UserTask_0tay5vq" targetRef="ParallelGateway_01y8nqr" />
+    <bpmn:sequenceFlow id="SequenceFlow_1kopbyg" sourceRef="ParallelGateway_1r9j8mq" targetRef="UserTask_1xmqi15" />
+    <bpmn:sequenceFlow id="SequenceFlow_1g1yokz" sourceRef="ParallelGateway_1r9j8mq" targetRef="UserTask_0tay5vq" />
+    <bpmn:sequenceFlow id="SequenceFlow_05imc5a" sourceRef="UserTask_0ik5i8n" targetRef="ParallelGateway_1r9j8mq" />
+    <bpmn:sequenceFlow id="SequenceFlow_02t9j88" sourceRef="StartEvent_0mki6ak" targetRef="UserTask_0ik5i8n" />
+    <bpmn:task id="SendTask_15s431c" name="Submit the application for the job posting to the presidency">
+      <bpmn:incoming>SequenceFlow_1rv8zd5</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0d8yy09</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="SendTask_0a61y19" name="Notify the decision on the job advertisement text">
+      <bpmn:incoming>SequenceFlow_19klkiw</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0c7e9q8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="SendTask_0bxpjn2" name="Inform the Senate about the application for the job posting">
+      <bpmn:incoming>SequenceFlow_12ncqkc</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0sys11q</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="SendTask_1nlogep" name="Submit the application for the Equal Opportunities Officer&#39;s position">
+      <bpmn:incoming>SequenceFlow_1phybw2</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_00og1zc</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="SendTask_0nfs6i2" name="Submit the application for the ABL position">
+      <bpmn:incoming>SequenceFlow_0tsqa8b</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1xwdhy2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="SendTask_01zblc5" name="Send the statement">
+      <bpmn:incoming>SequenceFlow_1j26jrl</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0h77fme</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="SendTask_079qwbh" name="Send the statement">
+      <bpmn:incoming>SequenceFlow_1483c9t</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1dejlnd</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="SendTask_129omxq" name="Send the statement on the job advertisement text and the composition of the appointment committee">
+      <bpmn:incoming>SequenceFlow_1eb2fk2</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0y8ixfq</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:userTask id="UserTask_0fnw8rk" name="Write a statement on the job advertisement text and the composition of the appointment committee">
+      <bpmn:incoming>SequenceFlow_01xje5g</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1eb2fk2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_161azk7" name="Vote on the composition of the appointment committee">
+      <bpmn:incoming>SequenceFlow_0563v20</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0x9empm</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_13hrslx" name="Appoint a rapporteur">
+      <bpmn:incoming>SequenceFlow_0x9empm</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_01xje5g</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_064mal5" name="Application received">
+      <bpmn:incoming>SequenceFlow_0sys11q</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0563v20</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_005iim7" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1f04082" name="Job advertisement text approved / JOIN">
+      <bpmn:incoming>SequenceFlow_1r6ub49</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_144qvvo</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1lukr4e</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_1lmwbvg" name="Adjust the job advertisement text">
+      <bpmn:incoming>SequenceFlow_13447le</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_144qvvo</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_0iutg90" name="Central vote to initiate the job posting">
+      <bpmn:incoming>SequenceFlow_1lukr4e</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0hixs85</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndEvent_0rwr9op" name="End">
+      <bpmn:incoming>SequenceFlow_0hixs85</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_095gw6w" name="Job advertisement text approved / SPLIT">
+      <bpmn:incoming>SequenceFlow_1qzi9gf</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1r6ub49</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_13447le</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:parallelGateway id="ParallelGateway_17fcltq" name="Parallel Gateway / JOIN">
+      <bpmn:incoming>SequenceFlow_0bn8acv</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_11f0w82</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1qzi9gf</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_1qy83gc" name="Decision received">
+      <bpmn:incoming>SequenceFlow_0c7e9q8</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0bn8acv</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_03f4d4j" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:parallelGateway id="ParallelGateway_1rilztq" name="Parallel Gateway / SPLIT">
+      <bpmn:incoming>SequenceFlow_04vkvou</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1lnoidc</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1rv8zd5</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_1x5zdt8" name="Application received">
+      <bpmn:incoming>SequenceFlow_0d8yy09</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0sskxes</bpmn:outgoing>
+    </bpmn:intermediateThrowEvent>
+    <bpmn:userTask id="UserTask_0f7ha11" name="Review approval for the job advertisement text">
+      <bpmn:incoming>SequenceFlow_0sskxes</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_19klkiw</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_0ltu562" name="Decide on the composition of the appointment committee anew">
+      <bpmn:incoming>SequenceFlow_18k59zd</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1hnm67p</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0bdaoaw" name="Vote on the composition of the appointment committee positive? / JOIN">
+      <bpmn:incoming>SequenceFlow_1hnm67p</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0utzmsf</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_11f0w82</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_15dy5vf" name="Vote on the composition of the appointment committee positive? / SPLIT">
+      <bpmn:incoming>SequenceFlow_174af0x</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0utzmsf</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_18k59zd</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_0hp85kq" name="Received statement">
+      <bpmn:incoming>SequenceFlow_0y8ixfq</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_174af0x</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1y0tfdc" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:userTask id="UserTask_0h4cwwl" name="Plan the composition of the appointment committee">
+      <bpmn:incoming>SequenceFlow_1nq4dg3</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_12ncqkc</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_1vxcnc4" name="Compose a statement">
+      <bpmn:incoming>SequenceFlow_08crgax</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1483c9t</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_0258crt" name="Application received">
+      <bpmn:incoming>SequenceFlow_1xwdhy2</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_08crgax</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1pxs3ic" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:userTask id="UserTask_0qdfdg9" name="Compose a statement">
+      <bpmn:incoming>SequenceFlow_188s2hk</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1j26jrl</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_1xenhq3" name="Application received">
+      <bpmn:incoming>SequenceFlow_00og1zc</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_188s2hk</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0vf17bm" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:parallelGateway id="ParallelGateway_13o1tc1" name="Parallel Gateway / JOIN">
+      <bpmn:incoming>SequenceFlow_0zpbmdr</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_11idkqb</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1nq4dg3</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_03iyqpu" name="Teaching profession affected? / JOIN">
+      <bpmn:incoming>SequenceFlow_19jrgxc</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0kfpkbx</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0zpbmdr</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_1vdbxzh" name="Received statement">
+      <bpmn:incoming>SequenceFlow_1dejlnd</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_19jrgxc</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0kv5yzt" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_0sixx9g" name="Received statement">
+      <bpmn:incoming>SequenceFlow_0h77fme</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_11idkqb</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0cd12ia" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_125667i" name="Teaching profession affected? / SPLIT">
+      <bpmn:incoming>SequenceFlow_1vfqsjz</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0kfpkbx</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0tsqa8b</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:parallelGateway id="ParallelGateway_04rquo1" name="Parallel Gateway / SPLIT">
+      <bpmn:incoming>SequenceFlow_1lnoidc</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1vfqsjz</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1phybw2</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:userTask id="UserTask_0ik5i8n" name="Appointment planning in coordination with the presidency">
+      <bpmn:incoming>SequenceFlow_02t9j88</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_05imc5a</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_0qakidd" name="Writing a justification">
+      <bpmn:incoming>SequenceFlow_1r3byrh</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0j9rxz7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_03ov3k5" name="Complete the structural data sheet and attach it to the application">
+      <bpmn:incoming>SequenceFlow_1gytbpu</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0pkyh3t</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_1jvcvba" name="Draft and attach the job advertisement text in German and English language">
+      <bpmn:incoming>SequenceFlow_0pkyh3t</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_04vkvou</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0425eeq" name="W1 professorship without a commitment to development? / JOIN">
+      <bpmn:incoming>SequenceFlow_0j9rxz7</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0uew48r</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1gytbpu</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="UserTask_0tay5vq" name="Discussion of the budget with the presidency">
+      <bpmn:incoming>SequenceFlow_1g1yokz</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_15qk6jq</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_1xmqi15" name="Completing the application for the job posting">
+      <bpmn:incoming>SequenceFlow_1kopbyg</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_03lww7h</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_14dqay2" name="W1 professorship without a commitment to development? / SPLIT">
+      <bpmn:incoming>SequenceFlow_1tvodxz</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0uew48r</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1r3byrh</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:parallelGateway id="ParallelGateway_01y8nqr" name="Parallel Gateway / JOIN">
+      <bpmn:incoming>SequenceFlow_15qk6jq</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_03lww7h</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1tvodxz</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:parallelGateway id="ParallelGateway_1r9j8mq" name="Parallel Gateway / SPLIT">
+      <bpmn:incoming>SequenceFlow_05imc5a</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1g1yokz</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1kopbyg</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:startEvent id="StartEvent_0mki6ak" name="Start">
+      <bpmn:outgoing>SequenceFlow_02t9j88</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:association id="Association_0vfylpb" sourceRef="UserTask_0ik5i8n" targetRef="TextAnnotation_0zpfy01" />
+    <bpmn:textAnnotation id="TextAnnotation_0zpfy01">
+      <bpmn:text>including job description, presentation of the significance of the professorship</bpmn:text>
+    </bpmn:textAnnotation>
+  </bpmn:process>

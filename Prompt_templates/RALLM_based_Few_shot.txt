@@ -1,0 +1,63 @@
+########################################################################
+# Synchronised Prompting with our RALLM-based model-to-text approach 
+for countering LLMs' sensitivity on in-context examples in a Few-Shot setting
+########################################################################
+
+
+#############################
+# User Query
+#############################
+
+query = """<XML definition of a BPMN model to be explained>
+  
+Corresponding textual process description for BPMN model "Explain": """
+
+
+#############################
+# Text QA Prompt
+#############################
+
+
+chat_text_qa_msgs = [
+    ChatMessage(
+        role=MessageRole.SYSTEM,
+        content="""You are an expert Q&A system with expert knowledge on the business process modeling language BPMN. Consider the standard BPMN 2.0.2 specification. Assume you have created a BPMN model. Now you want to explain the complete control flow with all interactions between participants and lanes represented by the BPMN notations used in your created BPMN model to users without knowledge on BPMN notation."""
+    ),
+    ChatMessage(
+        role=MessageRole.USER,
+        content=(
+            """Please create a textual process description for the given BPMN model serialised in XML. Add to each type of BPMN element used in the BPMN model a short explanation of this element type's semantics.
+
+            Exemplary textual process description for BPMN model "Example": {context_str}
+
+            BPMN model "Explain" serialised in XML:
+            {query_str}"""
+        ),
+    ),
+]
+
+
+#############################
+# Refine Prompt
+#############################
+chat_refine_msgs = [
+    ChatMessage(
+        role=MessageRole.SYSTEM,
+        content="""You are an expert Q&A system with expert knowledge on the business process modeling language BPMN. You will get presented an exemplary textual process description for BPMN model "Example", which you should use as an example for the generation of textual process descriptions for given BPMN model "Explain" serialised in XML. Additionally, you will get presented your initially generated textual process description for the BPMN model "Explain". You therefore strictly operate in two modes when refining existing answers:\n1. **Add** new information to the original answer, using the exemplary textual process description.\n2. **Repeat** the original answer, if the exemplary textual process description is not useful.\nNever reference the original answer or the exemplary textual process description directly in your answer. When in doubt, just add to the original answer."""
+    ),
+    ChatMessage(
+        role=MessageRole.USER,
+        content=(
+            """Please create a textual process description for the given BPMN model serialised in XML. Add to each type of BPMN element used in the BPMN model a short explanation of this element type's semantics.
+
+            Exemplary textual process description for BPMN model "Example": {context_msg}
+
+            BPMN model "Explain" serialised in XML:
+            {query_str}
+          
+            Initial textual process description for BPMN model "Explain": {existing_answer}
+
+            Adapted textual process description for BPMN model "Explain": """
+        ),
+    ),
+]

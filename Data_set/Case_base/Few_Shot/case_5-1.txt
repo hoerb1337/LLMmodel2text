@@ -1,0 +1,58 @@
+BPMN model "Example" serialised in XML:
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0f1y8x3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+  <bpmn:process id="Process_03htkt1" isExecutable="true">
+    <bpmn:startEvent id="Event_1haplvf" name="Receive Customer Request for Loan Amount">
+      <bpmn:outgoing>Flow_0haw72c</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1xqu562" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0haw72c" sourceRef="Event_1haplvf" targetRef="Activity_0mew4hd" />
+    <bpmn:serviceTask id="Activity_0mew4hd" name="Invoke Risk Assessor">
+      <bpmn:incoming>Flow_0haw72c</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ssbkxk</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_0wr5ews" name="If" default="Flow_1wkq6qn">
+      <bpmn:incoming>Flow_1ssbkxk</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wkq6qn</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0syi6i2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0jjln2v</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1ssbkxk" sourceRef="Activity_0mew4hd" targetRef="Gateway_0wr5ews" />
+    <bpmn:endEvent id="Event_1dp2hvv" name="Deny">
+      <bpmn:incoming>Flow_1wkq6qn</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_15az6ri" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1wkq6qn" name="high risk" sourceRef="Gateway_0wr5ews" targetRef="Event_1dp2hvv" />
+    <bpmn:endEvent id="Event_0morg0q" name="Approve">
+      <bpmn:incoming>Flow_0syi6i2</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_07pzry4" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0syi6i2" name="low risk" sourceRef="Gateway_0wr5ews" targetRef="Event_0morg0q" />
+    <bpmn:sequenceFlow id="Flow_0jjln2v" name="large loan or review risk" sourceRef="Gateway_0wr5ews" targetRef="Activity_095hifm" />
+    <bpmn:serviceTask id="Activity_095hifm" name="Invoke Loan Approval">
+      <bpmn:incoming>Flow_0jjln2v</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rs7474</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_0cf4khv" name="Return Approval Response">
+      <bpmn:incoming>Flow_0rs7474</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_113rcgc" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0rs7474" sourceRef="Activity_095hifm" targetRef="Event_0cf4khv" />
+  </bpmn:process>
+
+Corresponding textual process description for the BPMN model "Example":
+The "Loan Request" process begins when a customer sends a request for a loan amount via a message, which triggers the message start event "Receive Customer Request for Loan Amount". A message start event waits for receiving a message from a Participant to start the Process.
+
+Once the request is received, the process moves to the service task "Invoke Risk Assessor". A Service Task is a Task that uses some sort of service, which could be a Web service or an automated application. 
+
+After the risk assessment, the process reaches an exclusive gateway named "If". A diverging Exclusive Gateway (Decision) is used to create alternative paths within a Process flow, whereas only one of the paths can be taken. In this case, the gateway represents a decision point in the process where the flow of control will diverge based on the risk assessment. This gateway thereby defines a default flow. 
+
+If the risk is high, the process will follow the default sequence flow named "high risk", and reach the throwing message end event "Deny". This type of End event indicates that a Message is sent to a Participant at the conclusion of the Process.
+
+If the risk is low, the process will follow the sequence flow named "low risk" and reach the throwing message end event "Approve". 
+s
+If the loan is large or the risk needs review, the process will follow the sequence flow named "large loan or review risk" and reach the service task "Invoke Loan Approval".
+
+After the loan approval process, the process reaches the throwing message end event "Return Approval Response". 
+
+In summary, this process model represents a loan request process where the loan request is received, the risk is assessed, a decision is made based on the risk assessment, and the decision is communicated back to the customer.

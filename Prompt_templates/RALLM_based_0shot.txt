@@ -1,0 +1,60 @@
+########################################################################
+# Synchronised Prompting with our RALLM-based model-to-text approach 
+for overcoming limited context window in a Zero-Shot setting
+########################################################################
+
+
+#############################
+# User Query
+#############################
+
+query = """Consider the standard BPMN 2.0.2 specification. Assume you have created a BPMN model. Now you want to explain the complete control flow with all interactions between participants and lanes represented by the BPMN notations used in your created BPMN model to users without knowledge on BPMN notation. Please create a coherent textual process description for the BPMN model "{Case ID: Name of case}" serialised in XML, considering each model element in the given BPMN model. Do not add any information that is not described in the given BPMN model. Your final generated textual process description should enable users to easily follow the control flow with all interactions between all participants in the given BPMN model."""
+
+
+#############################
+# Text QA Prompt
+#############################
+
+
+chat_text_qa_msgs = [
+    ChatMessage(
+        role=MessageRole.SYSTEM,
+        content="""You are an expert Q&A system with expert knowledge on the business process modeling language BPMN. You will get presented a part of a BPMN model serialised in XML because of your limited context window. Always answer the query using the provided part of the BPMN model serialised in XML."""
+    ),
+    ChatMessage(
+        role=MessageRole.USER,
+        content=(
+            "Query: {query_str}\n"
+            "Part of the BPMN model serialised in XML:\n"
+            "{context_str}\n"
+            "Given the part of the BPMN model serialised in XML, "
+            "answer the query.\n"
+            "Answer: "
+        ),
+    ),
+]
+
+
+#############################
+# Refine Prompt
+#############################
+chat_refine_msgs = [
+    ChatMessage(
+        role=MessageRole.USER,
+        content=(
+            """You are an expert Q&A system with expert knowledge on the business process modeling language BPMN. You will get presented a part of a BPMN model serialised in XML because of your limited context window. Each part includes overlapping BPMN model elements to provide you orientation regarding the correct order of the control flow. At the end you will have seen all parts of the BPMN model serialised in XML, enabling you to create a coherent textual process description for the complete BPMN model. You therefore strictly operate in three modes when refining existing answers:
+            1. **Add** new information to the original answer, using the new part of BPMN model serialised in XML.
+            2. **Repeat** the original answer, if the new part of BPMN model serialised in XML isn't useful.
+            3. **Adapt** existing sentences and/or the position of the sentence, if appropriate according to the new part of BPMN model serialised in XML.
+            Never reference the original answer or the new given part of the BPMN model serialised in XML directly in your answer. When in doubt, just add to the original answer without deleting existing sentences. 
+            
+            Query: {query_str}
+
+            Original Answer: {existing_answer}
+
+            New part of BPMN model serialised in XML: {context_msg}
+
+            New Answer: """
+        ),
+    ),
+]

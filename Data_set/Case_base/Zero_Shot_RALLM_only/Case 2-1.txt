@@ -1,0 +1,466 @@
+Case 2-1: SLA Violation
+Context of process: Telecommunications
+
+BPMN model serialised in XML:
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_06jivbd" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+  <bpmn:collaboration id="Collaboration_0svi949">
+    <bpmn:participant id="Participant_0r1bhdd" name="Customer service (TELECO)" processRef="Process_1r2n54u" />
+    <bpmn:participant id="Participant_1lt1089" name="Customer" processRef="Process_0220whl" />
+    <bpmn:participant id="Participant_0p9xkpk" name="Service management (TELECO)" processRef="Process_0uorfz9" />
+    <bpmn:participant id="Participant_1x38yga" name="Resource provisioning (TELECO)" processRef="Process_0uqo7zf" />
+    <bpmn:messageFlow id="Flow_0mkwj2v" sourceRef="Event_1lda75f" targetRef="Event_1o2yng6" />
+    <bpmn:messageFlow id="Flow_035yhmq" sourceRef="Event_1g48fz9" targetRef="Event_1biq0pc" />
+    <bpmn:messageFlow id="Flow_02cu5au" sourceRef="Event_1oon1vn" targetRef="Event_1p0ilmc" />
+    <bpmn:messageFlow id="Flow_0avazmz" sourceRef="Activity_0mynrvk" targetRef="Event_15j5s6s" />
+    <bpmn:messageFlow id="Flow_1w0labw" sourceRef="Event_0rlet17" targetRef="Event_15j5s6s" />
+    <bpmn:messageFlow id="Flow_14xcm1l" sourceRef="Event_0dbsjr4" targetRef="Event_1wk4x56" />
+    <bpmn:messageFlow id="Flow_0bcxrd9" sourceRef="Event_12s924e" targetRef="Event_0vyk23p" />
+    <bpmn:messageFlow id="Flow_0w0fb5h" sourceRef="Event_1id9pr1" targetRef="Event_1xk3g9w" />
+    <bpmn:messageFlow id="Flow_0ziyxw4" sourceRef="Activity_1hwbj9g" targetRef="Event_1i2rxrm" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1r2n54u" isExecutable="true">
+    <bpmn:userTask id="Activity_1vyigle" name="Enter problem report">
+      <bpmn:incoming>Flow_00d6c9f</bpmn:incoming>
+      <bpmn:incoming>Flow_1a4pehb</bpmn:incoming>
+      <bpmn:outgoing>Flow_052v7m9</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0qx0oud">
+        <bpmn:targetRef>DataObjectReference_0yjkie5</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:task id="Activity_1pacybo" name="Perform plausibility check">
+      <bpmn:incoming>Flow_052v7m9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0iga7i3</bpmn:outgoing>
+      <bpmn:property id="Property_0p0x8v5" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0mfogtk">
+        <bpmn:sourceRef>DataObjectReference_0yjkie5</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0p0x8v5</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_09uvjtj">
+        <bpmn:targetRef>DataObjectReference_1dovgfz</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_1qcuj08" name="Problem report OK?">
+      <bpmn:incoming>Flow_0iga7i3</bpmn:incoming>
+      <bpmn:outgoing>Flow_00d6c9f</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0cfcd7g</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:dataObjectReference id="DataObjectReference_0yjkie5" name="Problem report" dataObjectRef="DataObject_135n9fh" />
+    <bpmn:dataObject id="DataObject_135n9fh" />
+    <bpmn:serviceTask id="Activity_1d4zz0e" name="Determine significance of the customer (based on customer data in the problem report)">
+      <bpmn:incoming>Flow_0cfcd7g</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nxmcuf</bpmn:outgoing>
+      <bpmn:property id="Property_18kl6xl" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1fvvomh">
+        <bpmn:sourceRef>DataObjectReference_1dovgfz</bpmn:sourceRef>
+        <bpmn:targetRef>Property_18kl6xl</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_13b20qi">
+        <bpmn:targetRef>DataObjectReference_1ko4rsj</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:dataObjectReference id="DataObjectReference_1dovgfz" name="Problem report" dataObjectRef="DataObject_0dkdpij" />
+    <bpmn:dataObject id="DataObject_0dkdpij" />
+    <bpmn:exclusiveGateway id="Gateway_1dqvm83" name="Premium customer?">
+      <bpmn:incoming>Flow_0nxmcuf</bpmn:incoming>
+      <bpmn:outgoing>Flow_1x2p0pb</bpmn:outgoing>
+      <bpmn:outgoing>Flow_163o5f8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateThrowEvent id="Event_1lr0fuk" name="Go to problem fix process for premium customers">
+      <bpmn:incoming>Flow_163o5f8</bpmn:incoming>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_030db4r" name="" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:task id="Activity_0dv5cbu" name="Determine counter measures inclu. priorities">
+      <bpmn:incoming>Flow_0g7xnmy</bpmn:incoming>
+      <bpmn:outgoing>Flow_0s48jax</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:userTask id="Activity_1u1k6zz" name="Compare customer SLA and problem report">
+      <bpmn:incoming>Flow_1x2p0pb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0g7xnmy</bpmn:outgoing>
+      <bpmn:property id="Property_025yysf" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0yhrrsa">
+        <bpmn:sourceRef>DataObjectReference_1ko4rsj</bpmn:sourceRef>
+        <bpmn:targetRef>Property_025yysf</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_17b7ywf" name="Create detailed problem report incl. contract commitment data +  prioritized actions">
+      <bpmn:incoming>Flow_0s48jax</bpmn:incoming>
+      <bpmn:outgoing>Flow_11xkoc8</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1qq36ru">
+        <bpmn:targetRef>DataObjectReference_00ip1ui</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:intermediateThrowEvent id="Event_1lda75f">
+      <bpmn:incoming>Flow_11xkoc8</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cm4d6k</bpmn:outgoing>
+      <bpmn:property id="Property_00jlt2s" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_13578qi">
+        <bpmn:sourceRef>DataObjectReference_00ip1ui</bpmn:sourceRef>
+        <bpmn:targetRef>Property_00jlt2s</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1mvfubo" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:dataObjectReference id="DataObjectReference_00ip1ui" name="Detailed problem report" dataObjectRef="DataObject_0hps4g0" />
+    <bpmn:dataObject id="DataObject_0hps4g0" />
+    <bpmn:intermediateCatchEvent id="Event_15j5s6s">
+      <bpmn:incoming>Flow_1cm4d6k</bpmn:incoming>
+      <bpmn:outgoing>Flow_095miqq</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1nkb62z" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:parallelGateway id="Gateway_15470n2">
+      <bpmn:incoming>Flow_095miqq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dm577f</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0n0dj9z</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:task id="Activity_13z57m6" name="Create report for customer about performance and problem resolution">
+      <bpmn:incoming>Flow_0dm577f</bpmn:incoming>
+      <bpmn:outgoing>Flow_1q75aj3</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1351mkd">
+        <bpmn:targetRef>DataObjectReference_1xbu8nu</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:intermediateThrowEvent id="Event_1id9pr1">
+      <bpmn:incoming>Flow_1q75aj3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hf9gdo</bpmn:outgoing>
+      <bpmn:property id="Property_1qsdhm0" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0cqf21s">
+        <bpmn:sourceRef>DataObjectReference_1xbu8nu</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1qsdhm0</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1rd0mk7" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:parallelGateway id="Gateway_1xu0qnf">
+      <bpmn:incoming>Flow_0hf9gdo</bpmn:incoming>
+      <bpmn:incoming>Flow_1eobpto</bpmn:incoming>
+      <bpmn:outgoing>Flow_0thlwrg</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:task id="Activity_09p5bkn" name="Report SLA violation rebate to Billing &#38; Colections for billing adjustment">
+      <bpmn:incoming>Flow_0n0dj9z</bpmn:incoming>
+      <bpmn:outgoing>Flow_1eobpto</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_0uxz1gz">
+      <bpmn:incoming>Flow_0thlwrg</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataObjectReference id="DataObjectReference_1xbu8nu" name="Customer problem resolution report" dataObjectRef="DataObject_0kpz0x5" />
+    <bpmn:dataObject id="DataObject_0kpz0x5" />
+    <bpmn:sequenceFlow id="Flow_00d6c9f" name="NO" sourceRef="Gateway_1qcuj08" targetRef="Activity_1vyigle" />
+    <bpmn:sequenceFlow id="Flow_052v7m9" sourceRef="Activity_1vyigle" targetRef="Activity_1pacybo" />
+    <bpmn:sequenceFlow id="Flow_0iga7i3" sourceRef="Activity_1pacybo" targetRef="Gateway_1qcuj08" />
+    <bpmn:sequenceFlow id="Flow_0cfcd7g" name="YES" sourceRef="Gateway_1qcuj08" targetRef="Activity_1d4zz0e" />
+    <bpmn:sequenceFlow id="Flow_0nxmcuf" sourceRef="Activity_1d4zz0e" targetRef="Gateway_1dqvm83" />
+    <bpmn:sequenceFlow id="Flow_1x2p0pb" name="NO" sourceRef="Gateway_1dqvm83" targetRef="Activity_1u1k6zz" />
+    <bpmn:sequenceFlow id="Flow_163o5f8" name="YES" sourceRef="Gateway_1dqvm83" targetRef="Event_1lr0fuk" />
+    <bpmn:sequenceFlow id="Flow_0g7xnmy" sourceRef="Activity_1u1k6zz" targetRef="Activity_0dv5cbu" />
+    <bpmn:sequenceFlow id="Flow_0s48jax" sourceRef="Activity_0dv5cbu" targetRef="Activity_17b7ywf" />
+    <bpmn:sequenceFlow id="Flow_11xkoc8" sourceRef="Activity_17b7ywf" targetRef="Event_1lda75f" />
+    <bpmn:sequenceFlow id="Flow_1cm4d6k" sourceRef="Event_1lda75f" targetRef="Event_15j5s6s" />
+    <bpmn:sequenceFlow id="Flow_095miqq" sourceRef="Event_15j5s6s" targetRef="Gateway_15470n2" />
+    <bpmn:sequenceFlow id="Flow_0dm577f" sourceRef="Gateway_15470n2" targetRef="Activity_13z57m6" />
+    <bpmn:sequenceFlow id="Flow_0n0dj9z" sourceRef="Gateway_15470n2" targetRef="Activity_09p5bkn" />
+    <bpmn:sequenceFlow id="Flow_1q75aj3" sourceRef="Activity_13z57m6" targetRef="Event_1id9pr1" />
+    <bpmn:sequenceFlow id="Flow_0hf9gdo" sourceRef="Event_1id9pr1" targetRef="Gateway_1xu0qnf" />
+    <bpmn:sequenceFlow id="Flow_1eobpto" sourceRef="Activity_09p5bkn" targetRef="Gateway_1xu0qnf" />
+    <bpmn:sequenceFlow id="Flow_0thlwrg" sourceRef="Gateway_1xu0qnf" targetRef="Event_0uxz1gz" />
+    <bpmn:dataObjectReference id="DataObjectReference_1ko4rsj" name="Problem report" dataObjectRef="DataObject_1yb1tvf" />
+    <bpmn:dataObject id="DataObject_1yb1tvf" />
+    <bpmn:startEvent id="Event_1i2rxrm">
+      <bpmn:outgoing>Flow_1a4pehb</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0v4v9su" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1a4pehb" sourceRef="Event_1i2rxrm" targetRef="Activity_1vyigle" />
+  </bpmn:process>
+  <bpmn:process id="Process_0220whl" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_0dbqp5k" sourceRef="Event_1xk3g9w" targetRef="Event_1ad6bv6" />
+    <bpmn:sequenceFlow id="Flow_14v5m7o" sourceRef="Activity_1hwbj9g" targetRef="Event_1xk3g9w" />
+    <bpmn:sequenceFlow id="Flow_1m5rl6h" sourceRef="Event_1ojzt25" targetRef="Activity_1hwbj9g" />
+    <bpmn:endEvent id="Event_1ad6bv6">
+      <bpmn:incoming>Flow_0dbqp5k</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="Event_1xk3g9w">
+      <bpmn:incoming>Flow_14v5m7o</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dbqp5k</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_04u8p2p" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:dataObjectReference id="DataObjectReference_0u9dir2" name="Actual service performance" dataObjectRef="DataObject_0qv2l9l" />
+    <bpmn:dataObject id="DataObject_0qv2l9l" />
+    <bpmn:dataObjectReference id="DataObjectReference_1hrohtt" name="List of problem parameters" dataObjectRef="DataObject_15nlqv1" />
+    <bpmn:dataObject id="DataObject_15nlqv1" />
+    <bpmn:task id="Activity_1hwbj9g" name="Send list of problem parameters">
+      <bpmn:incoming>Flow_1m5rl6h</bpmn:incoming>
+      <bpmn:outgoing>Flow_14v5m7o</bpmn:outgoing>
+      <bpmn:property id="Property_01oe7ef" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_05rrfx3">
+        <bpmn:sourceRef>DataObjectReference_1hrohtt</bpmn:sourceRef>
+        <bpmn:targetRef>Property_01oe7ef</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    <bpmn:startEvent id="Event_1ojzt25" name="Service degradation perceived">
+      <bpmn:outgoing>Flow_1m5rl6h</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0ms4z9q" />
+    </bpmn:startEvent>
+  </bpmn:process>
+  <bpmn:process id="Process_0uorfz9" isExecutable="true">
+    <bpmn:startEvent id="Event_1o2yng6">
+      <bpmn:outgoing>Flow_11delmo</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_18071d8" />
+    </bpmn:startEvent>
+    <bpmn:userTask id="Activity_0qf7bpj" name="Investigate whether problem is analyzable at his level">
+      <bpmn:incoming>Flow_11delmo</bpmn:incoming>
+      <bpmn:outgoing>Flow_06q5mna</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_14ellxn" name="Analyzable here?">
+      <bpmn:incoming>Flow_06q5mna</bpmn:incoming>
+      <bpmn:outgoing>Flow_0yq11y5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0m8ivo7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateThrowEvent id="Event_1g48fz9">
+      <bpmn:incoming>Flow_0yq11y5</bpmn:incoming>
+      <bpmn:property id="Property_0c9l6mj" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0falblx">
+        <bpmn:sourceRef>DataObjectReference_0dekz2y</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0c9l6mj</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_169eqtz" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:task id="Activity_1vaepmk" name="Perform problem analysis">
+      <bpmn:incoming>Flow_0m8ivo7</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gg2ucs</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_0rq7j9y" name="Create trouble report including the type of problem">
+      <bpmn:incoming>Flow_1gg2ucs</bpmn:incoming>
+      <bpmn:outgoing>Flow_11132tw</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_02nc3vw">
+        <bpmn:targetRef>DataObjectReference_0cmf3ou</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:intermediateCatchEvent id="Event_1p0ilmc">
+      <bpmn:incoming>Flow_11132tw</bpmn:incoming>
+      <bpmn:outgoing>Flow_1emuoir</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0741hjv" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="Activity_1a5gyw4" name="Prepare final status report">
+      <bpmn:incoming>Flow_1emuoir</bpmn:incoming>
+      <bpmn:outgoing>Flow_028s4mf</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1r2r8pj">
+        <bpmn:targetRef>DataObjectReference_1dct2hp</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:task id="Activity_0ug0p5u" name="Determine counter measures based on the final status report">
+      <bpmn:incoming>Flow_028s4mf</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nn9xsp</bpmn:outgoing>
+      <bpmn:property id="Property_1brcqtr" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1eonmpp">
+        <bpmn:sourceRef>DataObjectReference_1dct2hp</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1brcqtr</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    <bpmn:dataObjectReference id="DataObjectReference_1dct2hp" name="Final status report" dataObjectRef="DataObject_0m71kk2" />
+    <bpmn:dataObject id="DataObject_0m71kk2" />
+    <bpmn:exclusiveGateway id="Gateway_1kek5sa" name="What problem was detected?">
+      <bpmn:incoming>Flow_1nn9xsp</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jphmkm</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1w7v1t0</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0fli7dt</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_0mynrvk" name="Send out actual service performance">
+      <bpmn:incoming>Flow_1jphmkm</bpmn:incoming>
+      <bpmn:outgoing>Flow_126t10d</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0yzzky1">
+        <bpmn:targetRef>DataObjectReference_0u9dir2</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:task id="Activity_0txygcn" name="Undertake corrective actions">
+      <bpmn:incoming>Flow_1w7v1t0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0s01mfa</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_1r72az6">
+      <bpmn:incoming>Flow_126t10d</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Activity_0118diy" name="Create request for automatic resource restoration">
+      <bpmn:incoming>Flow_0fli7dt</bpmn:incoming>
+      <bpmn:outgoing>Flow_040hgy1</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1ycqwtx">
+        <bpmn:targetRef>DataObjectReference_0cwmmrz</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:intermediateThrowEvent id="Event_0dbsjr4">
+      <bpmn:incoming>Flow_040hgy1</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dca3fj</bpmn:outgoing>
+      <bpmn:property id="Property_09ycyf9" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1vd7qa2">
+        <bpmn:sourceRef>DataObjectReference_0cwmmrz</bpmn:sourceRef>
+        <bpmn:targetRef>Property_09ycyf9</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0ly2ggu" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:task id="Activity_1wz4ygo" name="Create problem resolution report">
+      <bpmn:incoming>Flow_0s01mfa</bpmn:incoming>
+      <bpmn:incoming>Flow_1o3iyuh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hx4d01</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0verz2n">
+        <bpmn:targetRef>DataObjectReference_0mrhx25</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:intermediateThrowEvent id="Event_0rlet17">
+      <bpmn:incoming>Flow_0hx4d01</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ka8wse</bpmn:outgoing>
+      <bpmn:property id="Property_1hu6rat" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0z5a964">
+        <bpmn:sourceRef>DataObjectReference_0mrhx25</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1hu6rat</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1tmtax9" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:dataObjectReference id="DataObjectReference_0mrhx25" name="Problem resolution report" dataObjectRef="DataObject_1nem6cm" />
+    <bpmn:dataObject id="DataObject_1nem6cm" />
+    <bpmn:endEvent id="Event_1w1f3sc">
+      <bpmn:incoming>Flow_1ka8wse</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataObjectReference id="DataObjectReference_0cwmmrz" name="Request" dataObjectRef="DataObject_1sk3t4u" />
+    <bpmn:dataObject id="DataObject_1sk3t4u" />
+    <bpmn:intermediateCatchEvent id="Event_0vyk23p">
+      <bpmn:incoming>Flow_1dca3fj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1o3iyuh</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0bpsq2c" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_11delmo" sourceRef="Event_1o2yng6" targetRef="Activity_0qf7bpj" />
+    <bpmn:sequenceFlow id="Flow_06q5mna" sourceRef="Activity_0qf7bpj" targetRef="Gateway_14ellxn" />
+    <bpmn:sequenceFlow id="Flow_0yq11y5" name="NO" sourceRef="Gateway_14ellxn" targetRef="Event_1g48fz9" />
+    <bpmn:sequenceFlow id="Flow_0m8ivo7" name="YES" sourceRef="Gateway_14ellxn" targetRef="Activity_1vaepmk" />
+    <bpmn:sequenceFlow id="Flow_1gg2ucs" sourceRef="Activity_1vaepmk" targetRef="Activity_0rq7j9y" />
+    <bpmn:sequenceFlow id="Flow_11132tw" sourceRef="Activity_0rq7j9y" targetRef="Event_1p0ilmc" />
+    <bpmn:sequenceFlow id="Flow_1emuoir" sourceRef="Event_1p0ilmc" targetRef="Activity_1a5gyw4" />
+    <bpmn:sequenceFlow id="Flow_028s4mf" sourceRef="Activity_1a5gyw4" targetRef="Activity_0ug0p5u" />
+    <bpmn:sequenceFlow id="Flow_1nn9xsp" sourceRef="Activity_0ug0p5u" targetRef="Gateway_1kek5sa" />
+    <bpmn:sequenceFlow id="Flow_1jphmkm" name="NONE" sourceRef="Gateway_1kek5sa" targetRef="Activity_0mynrvk" />
+    <bpmn:sequenceFlow id="Flow_1w7v1t0" name="Minor corrective actions required" sourceRef="Gateway_1kek5sa" targetRef="Activity_0txygcn" />
+    <bpmn:sequenceFlow id="Flow_0fli7dt" name="Resource restoration required" sourceRef="Gateway_1kek5sa" targetRef="Activity_0118diy" />
+    <bpmn:sequenceFlow id="Flow_126t10d" sourceRef="Activity_0mynrvk" targetRef="Event_1r72az6" />
+    <bpmn:sequenceFlow id="Flow_0s01mfa" sourceRef="Activity_0txygcn" targetRef="Activity_1wz4ygo" />
+    <bpmn:sequenceFlow id="Flow_040hgy1" sourceRef="Activity_0118diy" targetRef="Event_0dbsjr4" />
+    <bpmn:sequenceFlow id="Flow_1dca3fj" sourceRef="Event_0dbsjr4" targetRef="Event_0vyk23p" />
+    <bpmn:sequenceFlow id="Flow_1o3iyuh" sourceRef="Event_0vyk23p" targetRef="Activity_1wz4ygo" />
+    <bpmn:sequenceFlow id="Flow_0hx4d01" sourceRef="Activity_1wz4ygo" targetRef="Event_0rlet17" />
+    <bpmn:sequenceFlow id="Flow_1ka8wse" sourceRef="Event_0rlet17" targetRef="Event_1w1f3sc" />
+    <bpmn:dataObjectReference id="DataObjectReference_0dekz2y" name="Detailed problem report" dataObjectRef="DataObject_0b405wf" />
+    <bpmn:dataObject id="DataObject_0b405wf" />
+    <bpmn:dataObjectReference id="DataObjectReference_0cmf3ou" name="Trouble report" dataObjectRef="DataObject_1w45ikx" />
+    <bpmn:dataObject id="DataObject_1w45ikx" />
+  </bpmn:process>
+  <bpmn:process id="Process_0uqo7zf" isExecutable="true">
+    <bpmn:startEvent id="Event_1biq0pc">
+      <bpmn:outgoing>Flow_1pupa6v</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0f7c3ej" />
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_0q1ws6b" name="Check for possible problems">
+      <bpmn:incoming>Flow_1pupa6v</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ohi406</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_0dzoirl" name="Problem detected?">
+      <bpmn:incoming>Flow_1ohi406</bpmn:incoming>
+      <bpmn:outgoing>Flow_1inuso9</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1ko6dus</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_1j6krfj" name="Analyze in detail problem causes">
+      <bpmn:incoming>Flow_1inuso9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0l3ipix</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_0tbz557" name="Create trouble report">
+      <bpmn:incoming>Flow_0l3ipix</bpmn:incoming>
+      <bpmn:outgoing>Flow_1chqfxi</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_0hcw8vl">
+      <bpmn:incoming>Flow_1chqfxi</bpmn:incoming>
+      <bpmn:incoming>Flow_10cg69d</bpmn:incoming>
+      <bpmn:outgoing>Flow_19i8wiu</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_09nb6wf" name="Create notification of normal service execution">
+      <bpmn:incoming>Flow_1ko6dus</bpmn:incoming>
+      <bpmn:outgoing>Flow_10cg69d</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_0epcwp8" name="Create status report">
+      <bpmn:incoming>Flow_19i8wiu</bpmn:incoming>
+      <bpmn:outgoing>Flow_1oddrz2</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_03lw06w">
+        <bpmn:targetRef>DataObjectReference_1cmdsgr</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:intermediateThrowEvent id="Event_1oon1vn">
+      <bpmn:incoming>Flow_1oddrz2</bpmn:incoming>
+      <bpmn:outgoing>Flow_0j9xy1q</bpmn:outgoing>
+      <bpmn:property id="Property_0vro1hm" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1nsdo70">
+        <bpmn:sourceRef>DataObjectReference_1cmdsgr</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0vro1hm</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0uen02g" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:dataObjectReference id="DataObjectReference_1cmdsgr" name="Status report" dataObjectRef="DataObject_0gptefe" />
+    <bpmn:dataObject id="DataObject_0gptefe" />
+    <bpmn:intermediateCatchEvent id="Event_1wk4x56">
+      <bpmn:incoming>Flow_1b4ft2w</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vfmxog</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0b8rzhh" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:eventBasedGateway id="Gateway_1qpwpno">
+      <bpmn:incoming>Flow_0j9xy1q</bpmn:incoming>
+      <bpmn:outgoing>Flow_1b4ft2w</bpmn:outgoing>
+      <bpmn:outgoing>Flow_15flqt1</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:intermediateCatchEvent id="Event_1noy907" name="Wait 2 days">
+      <bpmn:incoming>Flow_15flqt1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gleme5</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0nga80f" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="Event_17qw5y2">
+      <bpmn:incoming>Flow_0gleme5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Activity_1cyme1o" name="Track errors">
+      <bpmn:incoming>Flow_0vfmxog</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jxtxtu</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_01xmwk8" name="Undertake corrective actions">
+      <bpmn:incoming>Flow_1jxtxtu</bpmn:incoming>
+      <bpmn:outgoing>Flow_059d7cy</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_05ykewq" name="Create troubleshooting report">
+      <bpmn:incoming>Flow_059d7cy</bpmn:incoming>
+      <bpmn:outgoing>Flow_14f3zo9</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0juflmv">
+        <bpmn:targetRef>DataObjectReference_0q8jv0o</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:intermediateThrowEvent id="Event_12s924e">
+      <bpmn:incoming>Flow_14f3zo9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0m6nsj8</bpmn:outgoing>
+      <bpmn:property id="Property_11yko59" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0s6d6zt">
+        <bpmn:sourceRef>DataObjectReference_0q8jv0o</bpmn:sourceRef>
+        <bpmn:targetRef>Property_11yko59</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1kc0g5x" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:endEvent id="Event_11f5kgp">
+      <bpmn:incoming>Flow_0m6nsj8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataObjectReference id="DataObjectReference_0q8jv0o" name="Troubleshooting report" dataObjectRef="DataObject_1xnhql8" />
+    <bpmn:dataObject id="DataObject_1xnhql8" />
+    <bpmn:sequenceFlow id="Flow_1pupa6v" sourceRef="Event_1biq0pc" targetRef="Activity_0q1ws6b" />
+    <bpmn:sequenceFlow id="Flow_1ohi406" sourceRef="Activity_0q1ws6b" targetRef="Gateway_0dzoirl" />
+    <bpmn:sequenceFlow id="Flow_1inuso9" sourceRef="Gateway_0dzoirl" targetRef="Activity_1j6krfj" />
+    <bpmn:sequenceFlow id="Flow_1ko6dus" sourceRef="Gateway_0dzoirl" targetRef="Activity_09nb6wf" />
+    <bpmn:sequenceFlow id="Flow_0l3ipix" sourceRef="Activity_1j6krfj" targetRef="Activity_0tbz557" />
+    <bpmn:sequenceFlow id="Flow_1chqfxi" sourceRef="Activity_0tbz557" targetRef="Gateway_0hcw8vl" />
+    <bpmn:sequenceFlow id="Flow_10cg69d" sourceRef="Activity_09nb6wf" targetRef="Gateway_0hcw8vl" />
+    <bpmn:sequenceFlow id="Flow_19i8wiu" sourceRef="Gateway_0hcw8vl" targetRef="Activity_0epcwp8" />
+    <bpmn:sequenceFlow id="Flow_1oddrz2" sourceRef="Activity_0epcwp8" targetRef="Event_1oon1vn" />
+    <bpmn:sequenceFlow id="Flow_0j9xy1q" sourceRef="Event_1oon1vn" targetRef="Gateway_1qpwpno" />
+    <bpmn:sequenceFlow id="Flow_1b4ft2w" sourceRef="Gateway_1qpwpno" targetRef="Event_1wk4x56" />
+    <bpmn:sequenceFlow id="Flow_0vfmxog" sourceRef="Event_1wk4x56" targetRef="Activity_1cyme1o" />
+    <bpmn:sequenceFlow id="Flow_15flqt1" sourceRef="Gateway_1qpwpno" targetRef="Event_1noy907" />
+    <bpmn:sequenceFlow id="Flow_0gleme5" sourceRef="Event_1noy907" targetRef="Event_17qw5y2" />
+    <bpmn:sequenceFlow id="Flow_1jxtxtu" sourceRef="Activity_1cyme1o" targetRef="Activity_01xmwk8" />
+    <bpmn:sequenceFlow id="Flow_059d7cy" sourceRef="Activity_01xmwk8" targetRef="Activity_05ykewq" />
+    <bpmn:sequenceFlow id="Flow_14f3zo9" sourceRef="Activity_05ykewq" targetRef="Event_12s924e" />
+    <bpmn:sequenceFlow id="Flow_0m6nsj8" sourceRef="Event_12s924e" targetRef="Event_11f5kgp" />
+  </bpmn:process>

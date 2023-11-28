@@ -1,0 +1,92 @@
+BPMN model "Example" serialised in XML:
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_19usbo1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+  <bpmn:collaboration id="Collaboration_12wu3o2">
+    <bpmn:participant id="Participant_1j58fpd" name="HR Check" processRef="Process_0bit9t5" />
+    <bpmn:participant id="Participant_1xtpo9z" name="Head of functional department" />
+    <bpmn:messageFlow id="Flow_0h2idds" sourceRef="Participant_1xtpo9z" targetRef="Event_1brfzur" />
+    <bpmn:messageFlow id="Flow_1hie6vs" sourceRef="Activity_1w1j62h" targetRef="Participant_1xtpo9z" />
+    <bpmn:messageFlow id="Flow_0oc9eso" sourceRef="Participant_1xtpo9z" targetRef="Activity_1w1j62h" />
+    <bpmn:messageFlow id="Flow_07q2rdj" sourceRef="Activity_0xqhmdb" targetRef="Participant_1xtpo9z" />
+    <bpmn:messageFlow id="Flow_186drs6" sourceRef="Participant_1xtpo9z" targetRef="Event_0hpm4jf" />
+    <bpmn:messageFlow id="Flow_003ev7x" sourceRef="Activity_15sh5ab" targetRef="Participant_1xtpo9z" />
+    <bpmn:messageFlow id="Flow_144imhr" sourceRef="Participant_1xtpo9z" targetRef="Event_1buxx76" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_0bit9t5" isExecutable="true">
+    <bpmn:startEvent id="Event_1brfzur" name="vacancy is reported">
+      <bpmn:outgoing>Flow_0ohjt2x</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0apa537" />
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_0qjo343" name="review report">
+      <bpmn:incoming>Flow_0ohjt2x</bpmn:incoming>
+      <bpmn:outgoing>Flow_1b6bsrc</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_166q4xg" name="Everything all right?">
+      <bpmn:incoming>Flow_1b6bsrc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xzv2y6</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1cieovx</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_1w1j62h" name="ask for details and requirements">
+      <bpmn:incoming>Flow_0xzv2y6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ffil64</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_0xqhmdb" name="create job description">
+      <bpmn:incoming>Flow_0ffil64</bpmn:incoming>
+      <bpmn:incoming>Flow_1cieovx</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gw3us9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:eventBasedGateway id="Gateway_018x86s">
+      <bpmn:incoming>Flow_0gw3us9</bpmn:incoming>
+      <bpmn:incoming>Flow_1lc75yp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ijgo7h</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1raoshf</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:intermediateCatchEvent id="Event_0hpm4jf" name="corrections are required">
+      <bpmn:incoming>Flow_0ijgo7h</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mbzw3c</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_09e6ur2" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="Activity_15sh5ab" name="correct job description">
+      <bpmn:incoming>Flow_0mbzw3c</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lc75yp</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:intermediateCatchEvent id="Event_1buxx76" name="job description is approved">
+      <bpmn:incoming>Flow_1raoshf</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ie3e2s</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1fih5sp" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="Activity_1r0ek8r" name="advertise post">
+      <bpmn:incoming>Flow_0ie3e2s</bpmn:incoming>
+      <bpmn:outgoing>Flow_04fifkr</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_12fpmh8" name="post is avertised">
+      <bpmn:incoming>Flow_04fifkr</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0ohjt2x" sourceRef="Event_1brfzur" targetRef="Activity_0qjo343" />
+    <bpmn:sequenceFlow id="Flow_1b6bsrc" sourceRef="Activity_0qjo343" targetRef="Gateway_166q4xg" />
+    <bpmn:sequenceFlow id="Flow_0xzv2y6" sourceRef="Gateway_166q4xg" targetRef="Activity_1w1j62h" />
+    <bpmn:sequenceFlow id="Flow_1cieovx" sourceRef="Gateway_166q4xg" targetRef="Activity_0xqhmdb" />
+    <bpmn:sequenceFlow id="Flow_0ffil64" sourceRef="Activity_1w1j62h" targetRef="Activity_0xqhmdb" />
+    <bpmn:sequenceFlow id="Flow_0gw3us9" sourceRef="Activity_0xqhmdb" targetRef="Gateway_018x86s" />
+    <bpmn:sequenceFlow id="Flow_1lc75yp" sourceRef="Activity_15sh5ab" targetRef="Gateway_018x86s" />
+    <bpmn:sequenceFlow id="Flow_0ijgo7h" sourceRef="Gateway_018x86s" targetRef="Event_0hpm4jf" />
+    <bpmn:sequenceFlow id="Flow_1raoshf" sourceRef="Gateway_018x86s" targetRef="Event_1buxx76" />
+    <bpmn:sequenceFlow id="Flow_0mbzw3c" sourceRef="Event_0hpm4jf" targetRef="Activity_15sh5ab" />
+    <bpmn:sequenceFlow id="Flow_0ie3e2s" sourceRef="Event_1buxx76" targetRef="Activity_1r0ek8r" />
+    <bpmn:sequenceFlow id="Flow_04fifkr" sourceRef="Activity_1r0ek8r" targetRef="Event_12fpmh8" />
+  </bpmn:process>
+
+Corresponding textual process description for the BPMN model "Example":
+The process "Job posting" involves two main pools as participants: the "Head of functional department" and the "HR Check". A Pool is the graphical representation of a Participant in a Collaboration.
+
+The process starts at "HR Check" with the message start event "vacancy is reported". A message start event waits for receiving a message from a Participant to start the Process. In this case, "HR Check" waits for the message sent by "Head of functional department" via a message flow. A Message Flow is used to show the flow of Messages between two Participants that are prepared to send and receive them. This message then triggers the start of the process. The first task of "HR Check" is to review the report (Task: review report). A Task is an atomic Activity that is included within a Process. A Task is used when the work in the Process is not broken down to a finer level of Process detail. After reviewing, a decision is made whether everything is alright with the report (Exclusive Gateway: Everything all right?). A diverging Exclusive Gateway (Decision) is used to create alternative paths within a Process flow, whereas only one of the paths can be taken. 
+
+If there are issues with the report, the "HR Check" asks the "Head of functional department" for more details and requirements (Task: ask for details and requirements) via a message flow. Once the details and requirements are received from the "Head of functional department", the "HR Check" proceeds to create a job description (Task: create job description). 
+
+If there were no issues with the report, the "HR Check" directly proceeds to create a job description. The "HR Check" then send the created job description to the "Head of functional department" via a message flow.  
+
+After the job description is created and sent, the process flow reaches an event-based gateway. The Event-Based Gateway represents a branching point in the Process where the alternative paths that follow the Gateway are based on Events that occur. In this case, two possible events can occur. Either corrections are required (Message Intermediate Catch Event: corrections are required) or the job description is approved (Message Intermediate Catch Event: job description is approved). A Message Intermediate Catch Event can be used to receive a Message. This causes the Process to continue if it was waiting for the Message. 
+
+In this case, "HR Check" waits for the message from the "Head of functional department" if "corrections are required" or the "job description is approved". If corrections are required, the "HR Check" corrects the job description (Task: correct job description). The "HR Check" then sends the corrected job description to the "Head of functional department" via a message flow. The process loops back to the event-based gateway, repeating the flow from the event-based gateway.
+
+If the job description is approved by the "Head of functional department" via a message flow, the "HR Check" proceeds to advertise the post (Task: advertise post). The process ends when the post is advertised (End Event: post is advertised). The End Event indicates where a Process will end. 

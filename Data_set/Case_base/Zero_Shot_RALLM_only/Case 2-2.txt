@@ -1,0 +1,344 @@
+Case 2-2: Supplier Switch
+Context of process: Energy
+
+BPMN model serialised in XML:
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_16fdoxl" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+  <bpmn:collaboration id="Collaboration_1kv5v8w">
+    <bpmn:participant id="Participant_0w2pxp8" name="Customer Service" processRef="Process_0pxoftc" />
+    <bpmn:participant id="Participant_0a6dzvk" name="Customer" processRef="Process_17be1uq" />
+    <bpmn:participant id="Participant_1bx3aji" name="Grid operator" processRef="Process_13oq7re" />
+    <bpmn:participant id="Participant_1cgqeb8" name="Old supplier" processRef="Process_0cwvppa" />
+    <bpmn:messageFlow id="Flow_17huuv8" name="customer data" sourceRef="Activity_1ina4qe" targetRef="Event_006g3o5" />
+    <bpmn:messageFlow id="Flow_0wnflff" name="Grid registration request" sourceRef="Activity_1xnrvs1" targetRef="Event_0f9d0q7" />
+    <bpmn:messageFlow id="Flow_1c4v476" name="Supplier concurrence check result" sourceRef="Activity_0ytjpqa" targetRef="Event_1o92xth" />
+    <bpmn:messageFlow id="Flow_0l9t96m" name="Final billing" sourceRef="Participant_1cgqeb8" targetRef="Event_143y27o" />
+    <bpmn:messageFlow id="Flow_14sfcyu" name="Final billing" sourceRef="Activity_03zq4vu" targetRef="Participant_1cgqeb8" />
+    <bpmn:messageFlow id="Flow_1xxohku" name="Meter data" sourceRef="Activity_05dpshi" targetRef="Participant_1cgqeb8" />
+    <bpmn:messageFlow id="Flow_1xkrfmt" name="Withdrawal" sourceRef="Activity_07qt50e" targetRef="Event_1aj0b9k" />
+    <bpmn:messageFlow id="Flow_1mvg1vo" name="Switch offer" sourceRef="Activity_0vl8hai" targetRef="Event_0j10ur2" />
+    <bpmn:messageFlow id="Flow_1oylg7q" name="Withdrawal" sourceRef="Activity_07qt50e" targetRef="Event_1ul0iiv" />
+    <bpmn:messageFlow id="Flow_0u527a7" name="Confirmation" sourceRef="Activity_0yxkhxe" targetRef="Event_1vm7q05" />
+    <bpmn:messageFlow id="Flow_1cpinq2" name="Meter data" sourceRef="Activity_05dpshi" targetRef="Event_1cvam2h" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_0pxoftc" isExecutable="true">
+    <bpmn:startEvent id="Event_006g3o5">
+      <bpmn:outgoing>Flow_19u0wo0</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1kqh3mb" />
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_0m7rc22" name="Enter customer data object">
+      <bpmn:incoming>Flow_19u0wo0</bpmn:incoming>
+      <bpmn:incoming>Flow_0eq5g36</bpmn:incoming>
+      <bpmn:outgoing>Flow_0aatwk0</bpmn:outgoing>
+      <bpmn:property id="Property_0qziki4" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_17yl0ml">
+        <bpmn:sourceRef>DataObjectReference_0r5zpsx</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0qziki4</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    <bpmn:task id="Activity_05wag9z" name="Check customer data">
+      <bpmn:incoming>Flow_0aatwk0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0b4nupk</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_19jc6xw" name="Data complete and plausible?">
+      <bpmn:incoming>Flow_0b4nupk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nlsz83</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1cdaru5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_1s7rgz3" name="Error handling">
+      <bpmn:incoming>Flow_0nlsz83</bpmn:incoming>
+      <bpmn:outgoing>Flow_0eq5g36</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1xnijep">
+        <bpmn:targetRef>DataObjectReference_0r5zpsx</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:dataObjectReference id="DataObjectReference_0r5zpsx" name="Error list" dataObjectRef="DataObject_1ifjoab" />
+    <bpmn:dataObject id="DataObject_1ifjoab" />
+    <bpmn:task id="Activity_058wpol" name="Check customer&#39;s first registration">
+      <bpmn:incoming>Flow_1cdaru5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0k5l01n</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_1qwibe4" name="New customer?">
+      <bpmn:incoming>Flow_0k5l01n</bpmn:incoming>
+      <bpmn:outgoing>Flow_1o9ttr7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0kibyeh</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_1ui8r7i" name="Create customer">
+      <bpmn:incoming>Flow_0kibyeh</bpmn:incoming>
+      <bpmn:outgoing>Flow_1uy3jzt</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_17ycly4" name="Prepare contract documents">
+      <bpmn:incoming>Flow_1o9ttr7</bpmn:incoming>
+      <bpmn:incoming>Flow_1uy3jzt</bpmn:incoming>
+      <bpmn:incoming>Flow_0h1hm54</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rlu2hy</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0i5wubo">
+        <bpmn:targetRef>DataObjectReference_1ja9iha</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:task id="Activity_0o02k7i" name="Check contract documents">
+      <bpmn:incoming>Flow_1rlu2hy</bpmn:incoming>
+      <bpmn:outgoing>Flow_10u5d9z</bpmn:outgoing>
+      <bpmn:property id="Property_0dd1zlg" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1plbc60">
+        <bpmn:sourceRef>DataObjectReference_1ja9iha</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0dd1zlg</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_13l4sr9">
+        <bpmn:targetRef>DataObjectReference_0wvedby</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_0x0qoq6">
+      <bpmn:incoming>Flow_10u5d9z</bpmn:incoming>
+      <bpmn:outgoing>Flow_0krrppv</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0zsn443</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_1bxv3dz" name="Resolve issues">
+      <bpmn:incoming>Flow_0krrppv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h1hm54</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_1xnrvs1" name="Send documents">
+      <bpmn:incoming>Flow_0zsn443</bpmn:incoming>
+      <bpmn:outgoing>Flow_0n78kw9</bpmn:outgoing>
+      <bpmn:property id="Property_1rp2e4x" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1kl4etf">
+        <bpmn:sourceRef>DataObjectReference_0wvedby</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1rp2e4x</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    <bpmn:dataObjectReference id="DataObjectReference_1ja9iha" name="Grid registration request" dataObjectRef="DataObject_1tarl9x" />
+    <bpmn:dataObject id="DataObject_1tarl9x" />
+    <bpmn:dataObjectReference id="DataObjectReference_0wvedby" name="Grid registration request" dataObjectRef="DataObject_151botp" />
+    <bpmn:dataObject id="DataObject_151botp" />
+    <bpmn:intermediateCatchEvent id="Event_1o92xth">
+      <bpmn:incoming>Flow_0n78kw9</bpmn:incoming>
+      <bpmn:incoming>Flow_1uqr6au</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pj68vb</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_16k4s9q" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="Activity_130dr9t" name="Check outcome of supplier concurrence check">
+      <bpmn:incoming>Flow_0pj68vb</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nhmhe2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:intermediateCatchEvent id="Event_1uhwdfy" name="from &#34;Resolve situation&#34;">
+      <bpmn:outgoing>Flow_1uqr6au</bpmn:outgoing>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_0dxm36s" name="" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:exclusiveGateway id="Gateway_1d17gmy">
+      <bpmn:incoming>Flow_1nhmhe2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pyy9dw</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0d47xuv</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_19u0wo0" sourceRef="Event_006g3o5" targetRef="Activity_0m7rc22" />
+    <bpmn:sequenceFlow id="Flow_0eq5g36" sourceRef="Activity_1s7rgz3" targetRef="Activity_0m7rc22" />
+    <bpmn:sequenceFlow id="Flow_0aatwk0" sourceRef="Activity_0m7rc22" targetRef="Activity_05wag9z" />
+    <bpmn:sequenceFlow id="Flow_0b4nupk" sourceRef="Activity_05wag9z" targetRef="Gateway_19jc6xw" />
+    <bpmn:sequenceFlow id="Flow_0nlsz83" name="No" sourceRef="Gateway_19jc6xw" targetRef="Activity_1s7rgz3" />
+    <bpmn:sequenceFlow id="Flow_1cdaru5" name="Yes" sourceRef="Gateway_19jc6xw" targetRef="Activity_058wpol" />
+    <bpmn:sequenceFlow id="Flow_0k5l01n" sourceRef="Activity_058wpol" targetRef="Gateway_1qwibe4" />
+    <bpmn:sequenceFlow id="Flow_1o9ttr7" name="No" sourceRef="Gateway_1qwibe4" targetRef="Activity_17ycly4" />
+    <bpmn:sequenceFlow id="Flow_0kibyeh" name="Yes" sourceRef="Gateway_1qwibe4" targetRef="Activity_1ui8r7i" />
+    <bpmn:sequenceFlow id="Flow_1uy3jzt" sourceRef="Activity_1ui8r7i" targetRef="Activity_17ycly4" />
+    <bpmn:sequenceFlow id="Flow_0h1hm54" sourceRef="Activity_1bxv3dz" targetRef="Activity_17ycly4" />
+    <bpmn:sequenceFlow id="Flow_1rlu2hy" sourceRef="Activity_17ycly4" targetRef="Activity_0o02k7i" />
+    <bpmn:sequenceFlow id="Flow_10u5d9z" sourceRef="Activity_0o02k7i" targetRef="Gateway_0x0qoq6" />
+    <bpmn:sequenceFlow id="Flow_0krrppv" name="Not OK" sourceRef="Gateway_0x0qoq6" targetRef="Activity_1bxv3dz" />
+    <bpmn:sequenceFlow id="Flow_0zsn443" name="OK" sourceRef="Gateway_0x0qoq6" targetRef="Activity_1xnrvs1" />
+    <bpmn:sequenceFlow id="Flow_0n78kw9" sourceRef="Activity_1xnrvs1" targetRef="Event_1o92xth" />
+    <bpmn:sequenceFlow id="Flow_1uqr6au" sourceRef="Event_1uhwdfy" targetRef="Event_1o92xth" />
+    <bpmn:sequenceFlow id="Flow_0pj68vb" sourceRef="Event_1o92xth" targetRef="Activity_130dr9t" />
+    <bpmn:sequenceFlow id="Flow_1nhmhe2" sourceRef="Activity_130dr9t" targetRef="Gateway_1d17gmy" />
+    <bpmn:sequenceFlow id="Flow_1pyy9dw" name="positive" sourceRef="Gateway_1d17gmy" targetRef="Event_0h9d1sn" />
+    <bpmn:intermediateThrowEvent id="Event_0h9d1sn" name="to &#34;Resolve situation&#34;">
+      <bpmn:incoming>Flow_1pyy9dw</bpmn:incoming>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_0fpmedd" name="" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:task id="Activity_0ha1nkm" name="Create CIS contract">
+      <bpmn:incoming>Flow_0d47xuv</bpmn:incoming>
+      <bpmn:outgoing>Flow_1e9la26</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0d47xuv" name="negative" sourceRef="Gateway_1d17gmy" targetRef="Activity_0ha1nkm" />
+    <bpmn:sequenceFlow id="Flow_1e9la26" sourceRef="Activity_0ha1nkm" targetRef="Activity_0vl8hai" />
+    <bpmn:task id="Activity_0vl8hai" name="Send switch offer">
+      <bpmn:incoming>Flow_1e9la26</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lphme9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0lphme9" sourceRef="Activity_0vl8hai" targetRef="Gateway_12hijy7" />
+    <bpmn:eventBasedGateway id="Gateway_12hijy7">
+      <bpmn:incoming>Flow_0lphme9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wbmbzx</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0dqfiok</bpmn:outgoing>
+      <bpmn:outgoing>Flow_16el0vy</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:sequenceFlow id="Flow_0wbmbzx" sourceRef="Gateway_12hijy7" targetRef="Event_0pw3zu6" />
+    <bpmn:intermediateCatchEvent id="Event_0pw3zu6" name="Wait for 7 d">
+      <bpmn:incoming>Flow_0wbmbzx</bpmn:incoming>
+      <bpmn:outgoing>Flow_1d72b27</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1rnvaf0" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="Event_1vm7q05" name="Wait for confirmation">
+      <bpmn:incoming>Flow_0dqfiok</bpmn:incoming>
+      <bpmn:outgoing>Flow_18746rk</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0n59t3g" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0dqfiok" sourceRef="Gateway_12hijy7" targetRef="Event_1vm7q05" />
+    <bpmn:intermediateCatchEvent id="Event_1ul0iiv" name="Wait for withdrawal">
+      <bpmn:incoming>Flow_16el0vy</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ounrzt</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_11s8d7b" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_16el0vy" sourceRef="Gateway_12hijy7" targetRef="Event_1ul0iiv" />
+    <bpmn:endEvent id="Event_1pphfs1">
+      <bpmn:incoming>Flow_1ounrzt</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1ounrzt" sourceRef="Event_1ul0iiv" targetRef="Event_1pphfs1" />
+    <bpmn:exclusiveGateway id="Gateway_16o4dtu">
+      <bpmn:incoming>Flow_18746rk</bpmn:incoming>
+      <bpmn:incoming>Flow_1d72b27</bpmn:incoming>
+      <bpmn:outgoing>Flow_1adidr1</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_18746rk" sourceRef="Event_1vm7q05" targetRef="Gateway_16o4dtu" />
+    <bpmn:sequenceFlow id="Flow_1d72b27" sourceRef="Event_0pw3zu6" targetRef="Gateway_16o4dtu" />
+    <bpmn:intermediateCatchEvent id="Event_1cvam2h">
+      <bpmn:incoming>Flow_1adidr1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0kcyxnr</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0a6vqxa">
+        <bpmn:targetRef>DataObjectReference_090zej3</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1v0co69" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1adidr1" sourceRef="Gateway_16o4dtu" targetRef="Event_1cvam2h" />
+    <bpmn:task id="Activity_0i4fi1l" name="Import meter data">
+      <bpmn:incoming>Flow_0kcyxnr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1adkse7</bpmn:outgoing>
+      <bpmn:property id="Property_14obt1p" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1gbzn0l">
+        <bpmn:sourceRef>DataObjectReference_090zej3</bpmn:sourceRef>
+        <bpmn:targetRef>Property_14obt1p</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0kcyxnr" sourceRef="Event_1cvam2h" targetRef="Activity_0i4fi1l" />
+    <bpmn:endEvent id="Event_1huz5i9">
+      <bpmn:incoming>Flow_1adkse7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1adkse7" sourceRef="Activity_0i4fi1l" targetRef="Event_1huz5i9" />
+    <bpmn:dataObjectReference id="DataObjectReference_090zej3" name="Meter data" dataObjectRef="DataObject_1vdw7xi" />
+    <bpmn:dataObject id="DataObject_1vdw7xi" />
+  </bpmn:process>
+  <bpmn:process id="Process_17be1uq" isExecutable="true">
+    <bpmn:startEvent id="Event_1iikny4">
+      <bpmn:outgoing>Flow_07f96vr</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_1ina4qe" name="Request switch-over">
+      <bpmn:incoming>Flow_07f96vr</bpmn:incoming>
+      <bpmn:outgoing>Flow_02xjo95</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_1av73lg">
+      <bpmn:incoming>Flow_1d85la4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_0yyikpo">
+      <bpmn:incoming>Flow_0jy4y3w</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="Event_143y27o">
+      <bpmn:incoming>Flow_1gaub88</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jy4y3w</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0yahvsu" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="Event_0j10ur2">
+      <bpmn:incoming>Flow_02xjo95</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rt62us</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0cvnsc1" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="Activity_1r795j5" name="Check offered switch contract">
+      <bpmn:incoming>Flow_1rt62us</bpmn:incoming>
+      <bpmn:outgoing>Flow_11hj2zq</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_1uhxnde">
+      <bpmn:incoming>Flow_11hj2zq</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ebk6t1</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1dssykf</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_07qt50e" name="Withdraw from switch contract">
+      <bpmn:incoming>Flow_1ebk6t1</bpmn:incoming>
+      <bpmn:outgoing>Flow_1d85la4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_0yxkhxe" name="Confirm switch contract">
+      <bpmn:incoming>Flow_1dssykf</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gaub88</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_07f96vr" sourceRef="Event_1iikny4" targetRef="Activity_1ina4qe" />
+    <bpmn:sequenceFlow id="Flow_02xjo95" sourceRef="Activity_1ina4qe" targetRef="Event_0j10ur2" />
+    <bpmn:sequenceFlow id="Flow_1d85la4" sourceRef="Activity_07qt50e" targetRef="Event_1av73lg" />
+    <bpmn:sequenceFlow id="Flow_0jy4y3w" sourceRef="Event_143y27o" targetRef="Event_0yyikpo" />
+    <bpmn:sequenceFlow id="Flow_1gaub88" sourceRef="Activity_0yxkhxe" targetRef="Event_143y27o" />
+    <bpmn:sequenceFlow id="Flow_1rt62us" sourceRef="Event_0j10ur2" targetRef="Activity_1r795j5" />
+    <bpmn:sequenceFlow id="Flow_11hj2zq" sourceRef="Activity_1r795j5" targetRef="Gateway_1uhxnde" />
+    <bpmn:sequenceFlow id="Flow_1ebk6t1" name="Reject" sourceRef="Gateway_1uhxnde" targetRef="Activity_07qt50e" />
+    <bpmn:sequenceFlow id="Flow_1dssykf" name="Accept" sourceRef="Gateway_1uhxnde" targetRef="Activity_0yxkhxe" />
+  </bpmn:process>
+  <bpmn:process id="Process_13oq7re" isExecutable="true">
+    <bpmn:startEvent id="Event_07aw4rk">
+      <bpmn:outgoing>Flow_1dmdnvu</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:intermediateCatchEvent id="Event_0f9d0q7">
+      <bpmn:incoming>Flow_1dmdnvu</bpmn:incoming>
+      <bpmn:outgoing>Flow_1x4alp8</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0z1yonv" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="Activity_0ytjpqa" name="Check for supplier concurrence">
+      <bpmn:incoming>Flow_1x4alp8</bpmn:incoming>
+      <bpmn:outgoing>Flow_15fkghs</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:eventBasedGateway id="Gateway_0glind1">
+      <bpmn:incoming>Flow_15fkghs</bpmn:incoming>
+      <bpmn:outgoing>Flow_14baqgv</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0akh8nd</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:intermediateCatchEvent id="Event_0pd9ode" name="At switch date (max. 10d after)">
+      <bpmn:incoming>Flow_0akh8nd</bpmn:incoming>
+      <bpmn:outgoing>Flow_1aju0zl</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1b04zcx" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="Event_1aj0b9k">
+      <bpmn:incoming>Flow_14baqgv</bpmn:incoming>
+      <bpmn:outgoing>Flow_1l7cn3e</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_04xzmjv" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="Event_16k1ye3">
+      <bpmn:incoming>Flow_1l7cn3e</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:parallelGateway id="Gateway_0gevbyr">
+      <bpmn:incoming>Flow_1aju0zl</bpmn:incoming>
+      <bpmn:outgoing>Flow_0kdqvj2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0kdggpg</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:task id="Activity_05dpshi" name="Send meter data">
+      <bpmn:incoming>Flow_0kdqvj2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1j85dct</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_03zq4vu" name="Compute final billing">
+      <bpmn:incoming>Flow_0kdggpg</bpmn:incoming>
+      <bpmn:outgoing>Flow_17dji3i</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_1a90kkf">
+      <bpmn:incoming>Flow_1e5yadf</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:parallelGateway id="Gateway_1mzbwvt">
+      <bpmn:incoming>Flow_1j85dct</bpmn:incoming>
+      <bpmn:incoming>Flow_17dji3i</bpmn:incoming>
+      <bpmn:outgoing>Flow_1e5yadf</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="Flow_1dmdnvu" sourceRef="Event_07aw4rk" targetRef="Event_0f9d0q7" />
+    <bpmn:sequenceFlow id="Flow_1x4alp8" sourceRef="Event_0f9d0q7" targetRef="Activity_0ytjpqa" />
+    <bpmn:sequenceFlow id="Flow_15fkghs" sourceRef="Activity_0ytjpqa" targetRef="Gateway_0glind1" />
+    <bpmn:sequenceFlow id="Flow_14baqgv" sourceRef="Gateway_0glind1" targetRef="Event_1aj0b9k" />
+    <bpmn:sequenceFlow id="Flow_0akh8nd" sourceRef="Gateway_0glind1" targetRef="Event_0pd9ode" />
+    <bpmn:sequenceFlow id="Flow_1aju0zl" sourceRef="Event_0pd9ode" targetRef="Gateway_0gevbyr" />
+    <bpmn:sequenceFlow id="Flow_1l7cn3e" sourceRef="Event_1aj0b9k" targetRef="Event_16k1ye3" />
+    <bpmn:sequenceFlow id="Flow_0kdqvj2" sourceRef="Gateway_0gevbyr" targetRef="Activity_05dpshi" />
+    <bpmn:sequenceFlow id="Flow_0kdggpg" sourceRef="Gateway_0gevbyr" targetRef="Activity_03zq4vu" />
+    <bpmn:sequenceFlow id="Flow_1j85dct" sourceRef="Activity_05dpshi" targetRef="Gateway_1mzbwvt" />
+    <bpmn:sequenceFlow id="Flow_17dji3i" sourceRef="Activity_03zq4vu" targetRef="Gateway_1mzbwvt" />
+    <bpmn:sequenceFlow id="Flow_1e5yadf" sourceRef="Gateway_1mzbwvt" targetRef="Event_1a90kkf" />
+  </bpmn:process>
+  <bpmn:process id="Process_0cwvppa" isExecutable="true" />

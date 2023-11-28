@@ -1,0 +1,77 @@
+BPMN model "Example" serialised in XML:
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_12ezxwz" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+  <bpmn:collaboration id="Collaboration_00ysc3x">
+    <bpmn:participant id="Participant_1bz00hb" name="Vacation Request 1.0" processRef="Process_1hn2uxf" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1hn2uxf" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_1hwdigb">
+      <bpmn:lane id="Lane_1n933pm" name="Employee">
+        <bpmn:flowNodeRef>Event_0zd80m9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0ct056h</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0yafu3t</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_09o8qey" name="Boss">
+        <bpmn:flowNodeRef>Activity_19gfqo5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_06o03mj</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0zjhyi4</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_0v8xugs" name="Human Resource Assistant">
+        <bpmn:flowNodeRef>Activity_1bzqmzl</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1tsa3fo</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Event_0zd80m9" name="Start">
+      <bpmn:outgoing>Flow_0r4ekz3</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_0ct056h" name="Register Vacation Request">
+      <bpmn:incoming>Flow_0r4ekz3</bpmn:incoming>
+      <bpmn:outgoing>Flow_085ltgc</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:serviceTask id="Activity_19gfqo5" name="Verify Available Vacation Days">
+      <bpmn:incoming>Flow_085ltgc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ur7g8a</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:task id="Activity_06o03mj" name="Check Vacation Request">
+      <bpmn:incoming>Flow_0ur7g8a</bpmn:incoming>
+      <bpmn:outgoing>Flow_1tywisx</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_0zjhyi4">
+      <bpmn:incoming>Flow_1tywisx</bpmn:incoming>
+      <bpmn:outgoing>Flow_19ypldc</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0p6n7v8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_0yafu3t" name="Review Rejection Reason">
+      <bpmn:incoming>Flow_19ypldc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0w0l1ln</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_1bzqmzl" name="Make Administrative Task">
+      <bpmn:incoming>Flow_0p6n7v8</bpmn:incoming>
+      <bpmn:outgoing>Flow_06xsayd</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_1tsa3fo">
+      <bpmn:incoming>Flow_06xsayd</bpmn:incoming>
+      <bpmn:incoming>Flow_0w0l1ln</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0r4ekz3" sourceRef="Event_0zd80m9" targetRef="Activity_0ct056h" />
+    <bpmn:sequenceFlow id="Flow_085ltgc" sourceRef="Activity_0ct056h" targetRef="Activity_19gfqo5" />
+    <bpmn:sequenceFlow id="Flow_0ur7g8a" sourceRef="Activity_19gfqo5" targetRef="Activity_06o03mj" />
+    <bpmn:sequenceFlow id="Flow_1tywisx" sourceRef="Activity_06o03mj" targetRef="Gateway_0zjhyi4" />
+    <bpmn:sequenceFlow id="Flow_19ypldc" name="No" sourceRef="Gateway_0zjhyi4" targetRef="Activity_0yafu3t" />
+    <bpmn:sequenceFlow id="Flow_0p6n7v8" name="Yes" sourceRef="Gateway_0zjhyi4" targetRef="Activity_1bzqmzl" />
+    <bpmn:sequenceFlow id="Flow_0w0l1ln" sourceRef="Activity_0yafu3t" targetRef="Event_1tsa3fo" />
+    <bpmn:sequenceFlow id="Flow_06xsayd" sourceRef="Activity_1bzqmzl" targetRef="Event_1tsa3fo" />
+  </bpmn:process>
+
+Corresponding textual process description for the BPMN model "Example":
+The process "Vacation Request 1.0" involves one main pool as participant "Vacation Request 1.0". A Pool is the graphical representation of a Participant in a Collaboration. Within this pool, three roles are involved reflected in three different lanes: Employee, Boss, and Human Resource Assistant.  A Lane is a sub-partition within a Pool and will extend the entire length of the Pool. Lanes are used to organize and categorize Activities. 
+
+The process begins with a start event in the "Employee" lane". As the name implies, the Start Event indicates where a particular Process will start. The Employee initiates the process by registering a vacation request in the task "Register Vacation Request". A Task is an atomic Activity that is included within a Process. A Task is used when the work in the Process is not broken down to a finer level of Process detail. Once the request is registered, the process moves to the Boss's lane.
+
+The Boss then verifies the available vacation days in the "Verify Available Vacation Days" service task. A Service Task is a Task that uses some sort of service, which could be a Web service or an automated application. After verifying the vacation days, the Boss checks the vacation request in the "Check Vacation Request" task. 
+
+After checking the request, the process reaches a decision point, represented by the "Exclusive Gateway". A diverging Exclusive Gateway (Decision) is used to create alternative paths within a Process flow, whereas only one of the paths can be taken. If the request is rejected, the process follows the "No" path to the "Review Rejection Reason" task back in the Employee's lane. The Employee reviews the rejection reason.
+
+If the request is approved, the process follows the "Yes" path to the "Make Administrative Task" task in the Human Resource Assistant's lane. The Human Resource Assistant then performs the administrative task.
+
+The process ends with an end event when either the Employee reviews the rejection reason or the Human Resource Assistant completes the administrative task. The End Event indicates where a Process will end.

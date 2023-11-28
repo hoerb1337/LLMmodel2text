@@ -1,0 +1,98 @@
+###################################
+- Prompt templates for the LLM-based model-to-text approach following One-Shot prompting
+- Used in our experiments
+###################################
+
+
+######################################################################
+#### 1. Basic Prompt Structure + Primer for output 
+######################################################################
+
+prompt = [{
+                "role": "user",
+                "content": f"""Consider the standard BPMN 2.0.2 specification. Please create a textual process description for the given BPMN model serialised in XML.
+                
+                BPMN model "Example" serialised in XML:
+                {example_bpmn_xml}
+                
+                Corresponding textual process description for the BPMN model "Example":
+                {example_bpmn_text}
+                
+                BPMN model "{bpmn_model_name}" serialised in XML:
+                {bpmn_model}
+                
+                Corresponding textual process description for the BPMN model "{bpmn_model_name}": """
+                }]
+
+
+######################################################################
+#### 2. Basic Prompt Structure + Primer for output + System component 
+######################################################################
+
+prompt = [{
+                "role": "system",
+                "content": """You are an expert Q&A system with expert knowledge on the business process modeling language BPMN. Consider the standard BPMN 2.0.2 specification. Assume you have created a BPMN model. Now you want to explain the complete control flow with all interactions between participants and lanes represented by the BPMN notations used in your created BPMN model to users without knowledge on BPMN notation."""
+                },
+                {"role": "user",
+                 "content": f"""Please create a textual process description for the given BPMN model serialised in XML.
+                 
+                 BPMN model "Example" serialised in XML:
+                 {example_bpmn_xml}
+                 
+                 Corresponding textual process description for the BPMN model "Example":
+                 {example_bpmn_text}
+                 
+                 BPMN model "{bpmn_model_name}" serialised in XML:
+                 {bpmn_model}
+                 
+                 Corresponding textual process description for the BPMN model "{bpmn_model_name}": """
+                 }]
+
+
+###############################################################################################################
+#### 3. Basic Prompt Structure + Primer for output + System component +  Output instructions (style of text) 
+###############################################################################################################
+
+prompt = [{
+                "role": "system",
+                "content": """You are an expert Q&A system with expert knowledge on the business process modeling language BPMN. Consider the standard BPMN 2.0.2 specification. Assume you have created a BPMN model. Now you want to explain the complete control flow with all interactions between participants and lanes represented by the BPMN notations used in your created BPMN model to users without knowledge on BPMN notation."""
+                },
+                {"role": "user",
+                 "content": f"""Please create a textual process description for the given BPMN model serialised in XML. Add to each type of BPMN element used in the BPMN model a short explanation of this element type's semantics.
+                 
+                 BPMN model "Example" serialised in XML:
+                 {example_bpmn_xml}
+                 
+                 Corresponding textual process description for the BPMN model "Example":
+                 {example_bpmn_text}
+                 
+                 BPMN model "{bpmn_model_name}" serialised in XML:
+                 {bpmn_model}
+                 
+                 Corresponding textual process description for the BPMN model "{bpmn_model_name}": """
+                 }]
+
+
+
+############################################################################################################################################
+#### 4. Basic Prompt Structure + Primer for output + System component + Output instructions (style of text) + Other example #####
+############################################################################################################################################
+
+prompt = [{
+                "role": "system",
+                "content": """You are an expert Q&A system with expert knowledge on the business process modeling language BPMN. Consider the standard BPMN 2.0.2 specification. Assume you have created a BPMN model. Now you want to explain the complete control flow with all interactions between participants and lanes represented by the BPMN notations used in your created BPMN model to users without knowledge on BPMN notation."""
+                },
+                {"role": "user",
+                 "content": f"""Please create a textual process description for the given BPMN model serialised in XML. Add to each type of BPMN element used in the BPMN model a short explanation of this element type's semantics.
+                 
+                 BPMN model "Example" serialised in XML:
+                 {example_bpmn_xml}
+                 
+                 Corresponding textual process description for the BPMN model "Example":
+                 {example_bpmn_text}
+                 
+                 BPMN model "{bpmn_model_name}" serialised in XML:
+                 {bpmn_model}
+                 
+                 Corresponding textual process description for the BPMN model "{bpmn_model_name}": """
+                 }]
