@@ -12,14 +12,26 @@ openai.api_key = ""
 explain_BPMN_model_id = ""
 bpmn_model_name = ""
 model_nr = ""
-# Choosing prompt templates:
+
+# Choosing prompt templates
+# See description in module "LLM_prompt_engineering"
+# and its function "prompt_engineering" for more information.
 round = ""
-# XML definition of the model:
+
+# Input(x):
+# XML definition of the model to be explained:
 bpmn_model =  """"""
 
-# Choose example model for in-context learning
-in_context_learning = True # True or False (Zero Shot)
-example_BPMN_model_id = "" # ID of model in case base
+# Decide on prompting strategy.
+# True (One-SHot) or False (Zero Shot):
+in_context_learning = True 
+
+# Choose example model for in-context learning.
+# ID of model in case base.
+# See description in module "LLM_prompt_engineering"
+# and its function "prompt_demonstrations" for more information.
+example_BPMN_model_id = "" 
+
 # Retrieve in-context example from case base
 example_bpmn_xml, example_bpmn_text = LLM_prompt_engineering.prompt_demonstrations(example_BPMN_model_id=example_BPMN_model_id)
 
@@ -40,7 +52,7 @@ temperature=0.0
 model="gpt-4"
 context_window = 8192
 
-# Token number fit context window?
+# Does token number of prompt fit into context window?
 print("Counting the prompt's number of token...")
 num_tokens = LLM_prompt_engineering.num_tokens_from_messages(prompt, model)
 print("prompt's number of token: ", num_tokens)
