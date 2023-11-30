@@ -90,3 +90,17 @@ submitted to Department of Informatics/Goethe-University Frankfurt
 - The path to the case base needs to be adapted
 - The path to the export needs to be adapted
 - Comments + description in thesis PDF should enable you to understand its underlying logic
+
+####### How-to: Python scripts for analysis #######
+
+- Only tested with Python 3.10.9
+- The provided .csv-files with data from experiments are required
+- The path to the .csvfiles needs to be adapted
+- Dependencies:
+-- pandas library: see this URL for information on how to install this library: 
+   https://pandas.pydata.org/
+-- matplotlib.pyplot library: see this URL for information on how to install this library: 
+   https://matplotlib.org/stable/
+-- seaborn library: see this URL for information on how to install this library: 
+   https://seaborn.pydata.org/
+- Comments should enable you to understand their underlying logic
