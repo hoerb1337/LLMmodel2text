@@ -104,3 +104,9 @@ submitted to Department of Informatics/Goethe-University Frankfurt
 -- seaborn library: see this URL for information on how to install this library: 
    https://seaborn.pydata.org/
 - Comments should enable you to understand their underlying logic
+
+####### How-to: Data set/open .bpmn-files #######
+
+- To open provided BPMN models as .bpmn-files you need a modelling tool
+- This thesis worked with Camunda Modeler: https://camunda.com/de/platform/modeler/
+- Other tools can be SAP Signavio, draw.io, ...
